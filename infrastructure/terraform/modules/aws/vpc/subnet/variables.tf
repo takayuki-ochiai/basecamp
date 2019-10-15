@@ -1,4 +1,15 @@
- variable "vpc_id" {}
- variable "cidr_block" {}
- variable "availability_zone" {}
- variable "name" {}
+variable "vpc_id" {
+  type = string
+}
+
+variable "cidr_block" {
+  type = string
+}
+
+variable "availability_zone" {
+  type = string
+}
+
+variable "name" {
+  type = string
+}
