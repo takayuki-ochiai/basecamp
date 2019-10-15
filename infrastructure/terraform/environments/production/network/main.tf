@@ -40,7 +40,7 @@ module "private_subnet_1" {
 module "private_subnet_2" {
   source = "../../../modules/aws/vpc/subnet"
   vpc_id = aws_vpc.vpc.id
-  cidr_block = "10.1.3.0/24"
+  cidr_block = "10.1.4.0/24"
   availability_zone = "ap-northeast-1c"
   name = "${var.project_name}-${var.env}-private-subnet-2"
 }
