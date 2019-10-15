@@ -8,7 +8,7 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name      = "${var.project_name}-vpc"
+    Name      = "${var.project_name}-${var.env}-vpc"
     ManagedBy = "Terraform"
   }
 }
@@ -18,7 +18,7 @@ module "public_subnet_1" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.1.0/24"
   availability_zone = "ap-northeast-1a"
-  name              = "public-subnet1"
+  name              = "${var.project_name}-${var.env}-public-subnet-1"
 }
 
 module "public_subnet_2" {
@@ -26,7 +26,7 @@ module "public_subnet_2" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.2.0/24"
   availability_zone = "ap-northeast-1c"
-  name              = "public-subnet-2"
+  name              = "${var.project_name}-${var.env}-public-subnet-2"
 }
 
 module "private_subnet_1" {
@@ -34,7 +34,7 @@ module "private_subnet_1" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.3.0/24"
   availability_zone = "ap-northeast-1a"
-  name              = "private-subnet-1"
+  name              = "${var.project_name}-${var.env}-private-subnet-1"
 }
 
 module "private_subnet_2" {
@@ -42,14 +42,14 @@ module "private_subnet_2" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.3.0/24"
   availability_zone = "ap-northeast-1c"
-  name              = "private-subnet-2"
+  name              = "${var.project_name}-${var.env}-private-subnet-2"
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name      = "terraform-sandbox-igw"
+    Name      = "${var.project_name}-${var.env}-igw"
     ManagedBy = "Terraform"
   }
 }
@@ -58,7 +58,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_route_table" "public_table" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name      = "public-table"
+    Name      = "${var.project_name}-${var.env}-public-table"
     ManagedBy = "Terraform"
   }
 }
@@ -92,7 +92,7 @@ resource "aws_eip" "nat_gateway_1" {
   depends_on = [aws_internet_gateway.igw]
 
   tags = {
-    Name      = "nat-gateway-1"
+    Name      = "${var.project_name}-${var.env}-nat-gateway-1"
     ManagedBy = "Terraform"
   }
 }
@@ -105,7 +105,7 @@ resource "aws_nat_gateway" "nat_gateway_1" {
   depends_on = [aws_internet_gateway.igw]
 
   tags = {
-    Name      = "nat-gateway-1"
+    Name      = "${var.project_name}-${var.env}-nat-gateway-1"
     ManagedBy = "Terraform"
   }
 }
@@ -114,7 +114,7 @@ resource "aws_route_table" "private_table_1" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name      = "private-table-1"
+    Name      = "${var.project_name}-${var.env}-private-table-1"
     ManagedBy = "Terraform"
   }
 }
@@ -137,7 +137,7 @@ resource "aws_route_table" "private_table_2" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name      = "private-table-2"
+    Name      = "${var.project_name}-${var.env}-private-table-2"
     ManagedBy = "Terraform"
   }
 }
@@ -147,7 +147,7 @@ resource "aws_eip" "nat_gateway_2" {
   depends_on = [aws_internet_gateway.igw]
 
   tags = {
-    Name      = "nat-gateway-2"
+    Name      = "${var.project_name}-${var.env}-nat-gateway-2"
     ManagedBy = "Terraform"
   }
 }
@@ -160,7 +160,7 @@ resource "aws_nat_gateway" "nat_gateway_2" {
   depends_on = [aws_internet_gateway.igw]
 
   tags = {
-    Name      = "nat-gateway-2"
+    Name      = "${var.project_name}-${var.env}-nat-gateway-2"
     ManagedBy = "Terraform"
   }
 }
