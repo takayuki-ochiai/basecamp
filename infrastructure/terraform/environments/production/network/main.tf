@@ -70,12 +70,12 @@ resource "aws_route" "public_route" {
 }
 
 resource "aws_route_table_association" "public_1" {
-  route_table_id = aws_route_table.public_table
+  route_table_id = aws_route_table.public_table.id
   subnet_id      = module.public_subnet_1.subnet_id
 }
 
 resource "aws_route_table_association" "public_2" {
-  route_table_id = aws_route_table.public_table
+  route_table_id = aws_route_table.public_table.id
   subnet_id      = module.public_subnet_2.subnet_id
 }
 
@@ -128,7 +128,7 @@ resource "aws_route" "private_1" {
 }
 
 resource "aws_route_table_association" "private_1" {
-  route_table_id = aws_route_table.private_table_1
+  route_table_id = aws_route_table.private_table_1.id
   subnet_id      = module.private_subnet_1.subnet_id
 }
 
@@ -174,6 +174,6 @@ resource "aws_route" "private_2" {
 }
 
 resource "aws_route_table_association" "private_2" {
-  route_table_id = aws_route_table.private_table_2
+  route_table_id = aws_route_table.private_table_2.id
   subnet_id      = module.private_subnet_2.subnet_id
 }
