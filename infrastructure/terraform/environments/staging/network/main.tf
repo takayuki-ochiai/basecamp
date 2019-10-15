@@ -14,7 +14,7 @@ resource "aws_vpc" "vpc" {
 }
 
 module "public_subnet_1" {
-  source            = "../../../modules/aws/subnet"
+  source            = "../../../modules/aws/vpc/subnet"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.1.0/24"
   availability_zone = "ap-northeast-1a"
@@ -22,7 +22,7 @@ module "public_subnet_1" {
 }
 
 module "public_subnet_2" {
-  source            = "../../../modules/aws/subnet"
+  source            = "../../../modules/aws/vpc/subnet"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.2.0/24"
   availability_zone = "ap-northeast-1c"
@@ -30,7 +30,7 @@ module "public_subnet_2" {
 }
 
 module "private_subnet_1" {
-  source            = "../../../modules/aws/subnet"
+  source            = "../../../modules/aws/vpc/subnet"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.3.0/24"
   availability_zone = "ap-northeast-1a"
@@ -38,7 +38,7 @@ module "private_subnet_1" {
 }
 
 module "private_subnet_2" {
-  source            = "../../../modules/aws/subnet"
+  source            = "../../../modules/aws/vpc/subnet"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.1.3.0/24"
   availability_zone = "ap-northeast-1c"
