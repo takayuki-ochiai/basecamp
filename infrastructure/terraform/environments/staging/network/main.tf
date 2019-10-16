@@ -21,13 +21,13 @@ module "public_subnet_1" {
   name              = "${var.project_name}-${var.env}-public-subnet-1"
 }
 
-module "public_subnet_2" {
-  source            = "../../../modules/aws/vpc/subnet"
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = "10.2.2.0/24"
-  availability_zone = "ap-northeast-1c"
-  name              = "${var.project_name}-${var.env}-public-subnet-2"
-}
+//module "public_subnet_2" {
+//  source            = "../../../modules/aws/vpc/subnet"
+//  vpc_id            = aws_vpc.vpc.id
+//  cidr_block        = "10.2.2.0/24"
+//  availability_zone = "ap-northeast-1c"
+//  name              = "${var.project_name}-${var.env}-public-subnet-2"
+//}
 
 module "private_subnet_1" {
   source            = "../../../modules/aws/vpc/subnet"
@@ -37,13 +37,13 @@ module "private_subnet_1" {
   name              = "${var.project_name}-${var.env}-private-subnet-1"
 }
 
-module "private_subnet_2" {
-  source            = "../../../modules/aws/vpc/subnet"
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = "10.2.4.0/24"
-  availability_zone = "ap-northeast-1c"
-  name              = "${var.project_name}-${var.env}-private-subnet-2"
-}
+//module "private_subnet_2" {
+//  source            = "../../../modules/aws/vpc/subnet"
+//  vpc_id            = aws_vpc.vpc.id
+//  cidr_block        = "10.2.4.0/24"
+//  availability_zone = "ap-northeast-1c"
+//  name              = "${var.project_name}-${var.env}-private-subnet-2"
+//}
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
@@ -74,10 +74,10 @@ resource "aws_route_table_association" "public_1" {
   subnet_id      = module.public_subnet_1.subnet_id
 }
 
-resource "aws_route_table_association" "public_2" {
-  route_table_id = aws_route_table.public_table.id
-  subnet_id      = module.public_subnet_2.subnet_id
-}
+//resource "aws_route_table_association" "public_2" {
+//  route_table_id = aws_route_table.public_table.id
+//  subnet_id      = module.public_subnet_2.subnet_id
+//}
 
 
 
@@ -133,47 +133,47 @@ resource "aws_route_table_association" "private_1" {
 }
 
 
-resource "aws_route_table" "private_table_2" {
-  vpc_id = aws_vpc.vpc.id
-
-  tags = {
-    Name      = "${var.project_name}-${var.env}-private-table-2"
-    ManagedBy = "Terraform"
-  }
-}
-
-resource "aws_eip" "nat_gateway_2" {
-  vpc        = true
-  depends_on = [aws_internet_gateway.igw]
-
-  tags = {
-    Name      = "${var.project_name}-${var.env}-nat-gateway-2"
-    ManagedBy = "Terraform"
-  }
-}
-
-resource "aws_nat_gateway" "nat_gateway_2" {
-  allocation_id = aws_eip.nat_gateway_2.id
-
-  // パブリックサブネットを指定すること
-  subnet_id  = module.public_subnet_2.subnet_id
-  depends_on = [aws_internet_gateway.igw]
-
-  tags = {
-    Name      = "${var.project_name}-${var.env}-nat-gateway-2"
-    ManagedBy = "Terraform"
-  }
-}
-
-resource "aws_route" "private_2" {
-  route_table_id = aws_route_table.private_table_2.id
-
-  // gateway_idではなくnat_gateway_idになっていることに注意！
-  nat_gateway_id         = aws_nat_gateway.nat_gateway_2.id
-  destination_cidr_block = "0.0.0.0/0"
-}
-
-resource "aws_route_table_association" "private_2" {
-  route_table_id = aws_route_table.private_table_2.id
-  subnet_id      = module.private_subnet_2.subnet_id
-}
+//resource "aws_route_table" "private_table_2" {
+//  vpc_id = aws_vpc.vpc.id
+//
+//  tags = {
+//    Name      = "${var.project_name}-${var.env}-private-table-2"
+//    ManagedBy = "Terraform"
+//  }
+//}
+//
+//resource "aws_eip" "nat_gateway_2" {
+//  vpc        = true
+//  depends_on = [aws_internet_gateway.igw]
+//
+//  tags = {
+//    Name      = "${var.project_name}-${var.env}-nat-gateway-2"
+//    ManagedBy = "Terraform"
+//  }
+//}
+//
+//resource "aws_nat_gateway" "nat_gateway_2" {
+//  allocation_id = aws_eip.nat_gateway_2.id
+//
+//  // パブリックサブネットを指定すること
+//  subnet_id  = module.public_subnet_2.subnet_id
+//  depends_on = [aws_internet_gateway.igw]
+//
+//  tags = {
+//    Name      = "${var.project_name}-${var.env}-nat-gateway-2"
+//    ManagedBy = "Terraform"
+//  }
+//}
+//
+//resource "aws_route" "private_2" {
+//  route_table_id = aws_route_table.private_table_2.id
+//
+//  // gateway_idではなくnat_gateway_idになっていることに注意！
+//  nat_gateway_id         = aws_nat_gateway.nat_gateway_2.id
+//  destination_cidr_block = "0.0.0.0/0"
+//}
+//
+//resource "aws_route_table_association" "private_2" {
+//  route_table_id = aws_route_table.private_table_2.id
+//  subnet_id      = module.private_subnet_2.subnet_id
+//}
