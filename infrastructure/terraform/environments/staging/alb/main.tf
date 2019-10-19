@@ -166,70 +166,70 @@ resource "aws_alb_listener" "redirect_http_to_https" {
 
 // リクエストフォワーディング
 // 任意のターゲットにリクエストをフォワードさせる
-resource "aws_lb_target_group" "forward_to_ecs" {
-  name   = "${var.project_name}-${var.env}-to-ecs"
-  vpc_id = data.terraform_remote_state.network.outputs.vpc_id
-
-  // ターゲットの種類の指定
-  // EC2インスタンスやIPアドレス、Lambda関数などが指定できる
-  // 今回はFargate使用の前提なのでipを指定
-  target_type = "ip"
-
-  port = 80
-
-  // HTTPSの終端はALBのため、protocolはHTTPとなる
-  protocol = "HTTP"
-
-  // ターゲット登録解除までにALBが待機する時間（秒）
-  deregistration_delay = 300
-
-  tags = {
-
-  }
-
-  // ヘルスチェックの設定
-  health_check {
-    // ヘルスチェックで確認するパス
-    path = "/"
-
-    // 正常判定を行うまでのヘルスチェック実行回数
-    healthy_threshold = 5
-
-    // 異常判定を行うまでのヘルスチェック実行回数
-    unhealthy_threshold = 2
-
-    // ヘルスチェックのタイムアウト時間（秒）
-    timeout = 5
-
-    // ヘルスチェックの間隔（秒）
-    interval = 30
-
-    // 正常かどうか判定するために使うHTTPステータスコード
-    matcher = "200"
-
-    // ヘルスチェック時に使うポート
-    port = "traffic-port"
-
-    // ヘルスチェック時に使うプロトコル
-    protocol = "HTTP"
-  }
-
-  depends_on = [aws_lb.alb]
-}
-
-resource "aws_lb_listener_rule" "https" {
-  listener_arn = aws_lb_listener.https.arn
-
-  // 優先度。数値が低いほど優先されるルールとなる
-  priority = 100
-
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.forward_to_ecs.arn
-  }
-
-  condition {
-    field  = "path-pattern"
-    values = ["/*"]
-  }
-}
+//resource "aws_lb_target_group" "forward_to_ecs" {
+//  name   = "${var.project_name}-${var.env}-to-ecs"
+//  vpc_id = data.terraform_remote_state.network.outputs.vpc_id
+//
+//  // ターゲットの種類の指定
+//  // EC2インスタンスやIPアドレス、Lambda関数などが指定できる
+//  // 今回はFargate使用の前提なのでipを指定
+//  target_type = "ip"
+//
+//  port = 80
+//
+//  // HTTPSの終端はALBのため、protocolはHTTPとなる
+//  protocol = "HTTP"
+//
+//  // ターゲット登録解除までにALBが待機する時間（秒）
+//  deregistration_delay = 300
+//
+//  tags = {
+//
+//  }
+//
+//  // ヘルスチェックの設定
+//  health_check {
+//    // ヘルスチェックで確認するパス
+//    path = "/"
+//
+//    // 正常判定を行うまでのヘルスチェック実行回数
+//    healthy_threshold = 5
+//
+//    // 異常判定を行うまでのヘルスチェック実行回数
+//    unhealthy_threshold = 2
+//
+//    // ヘルスチェックのタイムアウト時間（秒）
+//    timeout = 5
+//
+//    // ヘルスチェックの間隔（秒）
+//    interval = 30
+//
+//    // 正常かどうか判定するために使うHTTPステータスコード
+//    matcher = "200"
+//
+//    // ヘルスチェック時に使うポート
+//    port = "traffic-port"
+//
+//    // ヘルスチェック時に使うプロトコル
+//    protocol = "HTTP"
+//  }
+//
+//  depends_on = [aws_lb.alb]
+//}
+//
+//resource "aws_lb_listener_rule" "https" {
+//  listener_arn = aws_lb_listener.https.arn
+//
+//  // 優先度。数値が低いほど優先されるルールとなる
+//  priority = 100
+//
+//  action {
+//    type             = "forward"
+//    target_group_arn = aws_lb_target_group.forward_to_ecs.arn
+//  }
+//
+//  condition {
+//    field  = "path-pattern"
+//    values = ["/*"]
+//  }
+//}
