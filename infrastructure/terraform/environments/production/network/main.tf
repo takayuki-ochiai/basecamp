@@ -21,13 +21,13 @@ module "public_subnet_1" {
   name = "${var.project_name}-${var.env}-public-subnet-1"
 }
 
-//module "public_subnet_2" {
-//  source = "../../../modules/aws/vpc/subnet"
-//  vpc_id = aws_vpc.vpc.id
-//  cidr_block = "10.1.2.0/24"
-//  availability_zone = "ap-northeast-1c"
-//  name = "${var.project_name}-${var.env}-public-subnet-2"
-//}
+module "public_subnet_2" {
+  source = "../../../modules/aws/vpc/subnet"
+  vpc_id = aws_vpc.vpc.id
+  cidr_block = "10.1.2.0/24"
+  availability_zone = "ap-northeast-1c"
+  name = "${var.project_name}-${var.env}-public-subnet-2"
+}
 
 module "private_subnet_1" {
   source = "../../../modules/aws/vpc/subnet"
@@ -74,10 +74,10 @@ resource "aws_route_table_association" "public_1" {
   subnet_id      = module.public_subnet_1.subnet_id
 }
 
-//resource "aws_route_table_association" "public_2" {
-//  route_table_id = aws_route_table.public_table.id
-//  subnet_id      = module.public_subnet_2.subnet_id
-//}
+resource "aws_route_table_association" "public_2" {
+  route_table_id = aws_route_table.public_table.id
+  subnet_id      = module.public_subnet_2.subnet_id
+}
 
 
 
