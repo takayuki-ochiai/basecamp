@@ -1,10 +1,5 @@
-data "terraform_remote_state" "route53" {
-  backend = "s3"
-  config = {
-    bucket = var.project_name
-    key    = "global/route53/terraform.tfstate"
-    region = "ap-northeast-1"
-  }
+data "aws_route53_zone" "zone" {
+  name = "${var.project_name}.com"
 }
 
 resource "aws_acm_certificate" "certificate" {
@@ -31,7 +26,9 @@ resource "aws_route53_record" "certificate_record" {
   name    = aws_acm_certificate.certificate.domain_validation_options.0.resource_record_name
   type    = aws_acm_certificate.certificate.domain_validation_options.0.resource_record_type
   records = [aws_acm_certificate.certificate.domain_validation_options.0.resource_record_value]
-  zone_id = data.terraform_remote_state.route53.outputs.zone_id
+  zone_id = data.aws_route53_zone.zone.id
+
+  depends_on = [aws_acm_certificate.certificate]
   ttl     = 60
 }
 
