@@ -3,7 +3,7 @@ terraform {
 
   backend "s3" {
     bucket = "ochiai-basecamp"
-    key = "production/network/terraform.tfstate"
+    key    = "production/network/terraform.tfstate"
     region = "ap-northeast-1"
   }
 }

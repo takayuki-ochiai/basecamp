@@ -3,7 +3,7 @@ resource "aws_subnet" "subnet" {
   vpc_id     = var.vpc_id
 
   // このサブネットで起動したインスタンスにパブリックIPアドレスを自動的に割り当てる
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch = var.map_public_ip_on_launch
   availability_zone       = var.availability_zone
 
   tags = {

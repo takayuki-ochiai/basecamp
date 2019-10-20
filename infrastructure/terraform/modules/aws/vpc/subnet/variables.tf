@@ -13,3 +13,7 @@ variable "availability_zone" {
 variable "name" {
   type = string
 }
+
+variable "map_public_ip_on_launch" {
+  type = bool
+}
