@@ -40,13 +40,14 @@ module "private_subnet_1" {
   map_public_ip_on_launch = false
 }
 
-//module "private_subnet_2" {
-//  source            = "../../../modules/aws/vpc/subnet"
-//  vpc_id            = aws_vpc.vpc.id
-//  cidr_block        = "10.2.4.0/24"
-//  availability_zone = "ap-northeast-1c"
-//  name              = "${var.project_name}-${var.env}-private-subnet-2"
-//}
+module "private_subnet_2" {
+  source                  = "../../../modules/aws/vpc/subnet"
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.2.4.0/24"
+  availability_zone       = "ap-northeast-1c"
+  name                    = "${var.project_name}-${var.env}-private-subnet-2"
+  map_public_ip_on_launch = false
+}
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
@@ -125,7 +126,6 @@ resource "aws_route_table" "private_table_1" {
 resource "aws_route" "private_1" {
   route_table_id = aws_route_table.private_table_1.id
 
-  // gateway_idではなくnat_gateway_idになっていることに注意！
   nat_gateway_id         = aws_nat_gateway.nat_gateway_1.id
   destination_cidr_block = "0.0.0.0/0"
 }
@@ -136,14 +136,14 @@ resource "aws_route_table_association" "private_1" {
 }
 
 
-//resource "aws_route_table" "private_table_2" {
-//  vpc_id = aws_vpc.vpc.id
-//
-//  tags = {
-//    Name      = "${var.project_name}-${var.env}-private-table-2"
-//    ManagedBy = "Terraform"
-//  }
-//}
+resource "aws_route_table" "private_table_2" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name      = "${var.project_name}-${var.env}-private-table-2"
+    ManagedBy = "Terraform"
+  }
+}
 //
 //resource "aws_eip" "nat_gateway_2" {
 //  vpc        = true
@@ -168,15 +168,16 @@ resource "aws_route_table_association" "private_1" {
 //  }
 //}
 //
-//resource "aws_route" "private_2" {
-//  route_table_id = aws_route_table.private_table_2.id
-//
-//  // gateway_idではなくnat_gateway_idになっていることに注意！
-//  nat_gateway_id         = aws_nat_gateway.nat_gateway_2.id
-//  destination_cidr_block = "0.0.0.0/0"
-//}
-//
-//resource "aws_route_table_association" "private_2" {
-//  route_table_id = aws_route_table.private_table_2.id
-//  subnet_id      = module.private_subnet_2.subnet_id
-//}
+resource "aws_route" "private_2" {
+  route_table_id = aws_route_table.private_table_2.id
+  // NAT Gateway自体も複数構成のMultiAZにすべきだが、予算がないので諦める…
+  // 仮にAZ障害が起きた時はprivate subnetが一時的に孤立するが、許容する
+  // RDSとかまでMulti-AZできない状態になるよりはマシだろうという判断
+  nat_gateway_id         = aws_nat_gateway.nat_gateway_1.id
+  destination_cidr_block = "0.0.0.0/0"
+}
+
+resource "aws_route_table_association" "private_2" {
+  route_table_id = aws_route_table.private_table_2.id
+  subnet_id      = module.private_subnet_2.subnet_id
+}
