@@ -17,7 +17,7 @@ data "terraform_remote_state" "kms" {
 }
 
 // MySQLのmy.cnfに設定するようなデータベースの定義をDBパラメータグループに記述する
-resource "aws_db_parameter_group" "mysql" {
+resource "aws_db_parameter_group" "parameter_group" {
   // エンジン名とバージョンを含めたものを記載する
   family = "mysql8.0"
   name   = "${var.project_name}-${var.env}-mysql"
@@ -128,7 +128,7 @@ resource "aws_db_instance" "mysql" {
   apply_immediately = false
 
   vpc_security_group_ids = [module.mysql_sg.security_group_id]
-  parameter_group_name   = aws_db_parameter_group.mysql.name
+  parameter_group_name   = aws_db_parameter_group.parameter_group.name
   option_group_name      = aws_db_option_group.option_group.name
   db_subnet_group_name   = aws_db_subnet_group.subnet_group.name
 
