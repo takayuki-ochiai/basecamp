@@ -1,3 +1,9 @@
 .idea
 .terraform
 *.pub
+# for Frontend
+node_modules
+.next
+
+# for TypeScript tutorial
+services/frontend/tutorial
