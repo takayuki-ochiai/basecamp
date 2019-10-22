@@ -5,6 +5,9 @@
 ## 依存ツール、ライブラリ
 - Docker
 - direnv
+- ndenv
+- node.js
+  - v12.13.0
 
 ## インフラ構築
 - TODO: ドメイン名の登録だけは事前にやっておく
@@ -39,6 +42,24 @@
 - elasticacheを構築
   - 依存するリソース
     - network
+
+## Frontend
+基本的にこの記事をベースに構築した
+- https://qiita.com/matkatsu8/items/f0a592f713e68a8d95b7
+- IntelliJ IDEAの自動フォーマットの設定だけ、下記を参考にした
+  - https://www.yuts.me/posts/settingEslintOnIdea
+  - Prettierプラグインをインストール
+  - preferences > Language & Frameworks > JavaScript > Code Quality Tools > ESlint
+    - choose manual ESLint Configuration
+    - set the ESLint package field to `Detect package and configuration file from the nearest package.json`
+    - Configuration file
+      - choose automatic search
+    - press ok
+  - file watcher plugin
+    - preferences > Tools > FileWatchers
+    - press + at bottom
+    - choose Prettier
+    
 
 # Architecture
 - 基本的には全てのアプリケーションはコンテナで開発、デプロイする設計
