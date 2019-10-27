@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import * as React from "react";
+import React from "react";
 
 type Props = {
   childLabel: string;

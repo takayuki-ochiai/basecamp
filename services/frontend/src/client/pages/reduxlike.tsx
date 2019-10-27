@@ -1,5 +1,4 @@
 import React, { useReducer, useContext, Dispatch, ReactElement } from "react";
-import ReactDOM from "react-dom";
 import { NextPage } from "next";
 
 type CounterState = {
