@@ -10,6 +10,16 @@ const dev = process.env.NODE_ENV !== "production";
   const handle = nextApp.getRequestHandler();
   await nextApp.prepare();
 
+  app.get("/about", (req, res) => {
+    return nextApp.render(req, res, "/about", req.query);
+  });
+
+  app.get("/p/:id", (req, res) => {
+    const actualPage = "/post";
+    const queryParams = { title: req.params.id };
+    return nextApp.render(req, res, actualPage, queryParams);
+  });
+
   app.use((req, res) => {
     handle(req, res);
   });
@@ -19,34 +29,3 @@ const dev = process.env.NODE_ENV !== "production";
     console.log(`> Ready on http://${ENV.APP_HOST}:${ENV.APP_PORT}`);
   });
 })();
-
-// app.get("/", (req, res) => {
-//   const data = { ping: "pong" };
-//   res.send(data);
-// });
-// const express = require('express')
-// const next = require('next')
-//
-// const dev = process.env.NODE_ENV !== 'production'
-// const app = next({ dev })
-// const handle = app.getRequestHandler()
-//
-// app.prepare()
-//     .then(() => {
-//         const server = express()
-//
-//         server.get('*', (req, res) => {
-//             return handle(req, res)
-//         })
-//
-//         server.listen(3000, (err) => {
-//             if (err) throw err
-//             console.log('> Ready on http://localhost:3000')
-//         })
-//     })
-//     .catch((ex) => {
-//         console.error(ex.stack)
-//     })
-//         process.exit(1)
-// console.log("Hello world!!!!!!!!!!!!!!!!");
-// export default undefined;
