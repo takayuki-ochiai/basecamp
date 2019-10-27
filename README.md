@@ -44,7 +44,10 @@
     - network
 
 ## Frontend
-基本的にこの記事をベースに構築した
+- デプロイ等の都合上Dockerコンテナで開発しているが、IDEで参照するnode.jsやnode_modulesはホスト側にインストールする必要がある点に注意
+  - コンテナ用のnode_modulesとホスト用のnode_modulesの二重管理が必要
+  - 新しくパッケージをインストールした時はホスト側で `npm ci && npm cache clean --force` するだけじゃなくて、イメージも作り直す必要がある
+- そのほかは基本的にこの記事をベースに構築した
 - https://qiita.com/matkatsu8/items/f0a592f713e68a8d95b7
 - IntelliJ IDEAの自動フォーマットの設定だけ、下記を参考にした
   - https://www.yuts.me/posts/settingEslintOnIdea
@@ -59,7 +62,6 @@
     - preferences > Tools > FileWatchers
     - press + at bottom
     - choose Prettier
-    
 
 # Architecture
 - 基本的には全てのアプリケーションはコンテナで開発、デプロイする設計

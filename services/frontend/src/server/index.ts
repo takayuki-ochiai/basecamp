@@ -1,16 +1,18 @@
 import Express from "express";
 import next from "next";
 import * as ENV from "./constant";
+import { createTerminus } from "@godaddy/terminus";
+import http from "http";
 
 const dev = process.env.NODE_ENV !== "production";
 
 (async () => {
-  const server = Express();
+  const express = Express();
   const nextApp = next({ dev, dir: "./src/client" });
   const handle = nextApp.getRequestHandler();
   await nextApp.prepare();
 
-  server.use((req, res, next) => {
+  express.use((req, res, next) => {
     if (dev) {
       console.log(req.originalUrl);
       console.log(`request method: ${req.method}`);
@@ -18,18 +20,25 @@ const dev = process.env.NODE_ENV !== "production";
     next();
   });
 
-  server.get("/p/:id", (req, res) => {
+  express.get("/p/:id", (req, res) => {
     const actualPage = "/post";
     const queryParams = { title: req.params.id };
     return nextApp.render(req, res, actualPage, queryParams);
   });
 
-  server.all("*", (req, res) => {
+  express.all("*", (req, res) => {
     handle(req, res);
   });
 
-  server.listen(ENV.APP_PORT, ENV.APP_HOST, (err: Express.Errback) => {
-    if (err) throw err;
-    console.log(`> Ready on http://${ENV.APP_HOST}:${ENV.APP_PORT}`);
-  });
+  const server = http.createServer(express);
+  // graceful shutdown
+  function beforeShutdown() {
+    // SIGTERMシグナルが送信された後でもリクエストが流れてくる可能性を考慮し5秒待つ
+    return new Promise(resolve => {
+      setTimeout(resolve, 5000);
+    });
+  }
+
+  createTerminus(server, { beforeShutdown });
+  server.listen(ENV.APP_PORT);
 })();

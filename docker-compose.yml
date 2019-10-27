@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  node:
+    build:
+      dockerfile: Dockerfile
+      context: ./services/frontend
+      target: dev
+    volumes:
+      - ./services/frontend/src:/app/src:delegated
+      - ./services/frontend/package.json:/app/package.json:delegated
+      - ./services/frontend/package-lock.json:/app/package-lock.json:delegated
+      - ./services/frontend/tsconfig.json:/app/tsconfig.json:delegated
+    ports:
+      - "3000:3000"
