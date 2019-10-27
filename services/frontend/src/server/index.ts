@@ -10,8 +10,12 @@ const dev = process.env.NODE_ENV !== "production";
   const handle = nextApp.getRequestHandler();
   await nextApp.prepare();
 
-  server.get("/about", (req, res) => {
-    return nextApp.render(req, res, "/about", req.query);
+  server.use((req, res, next) => {
+    if (dev) {
+      console.log(req.originalUrl);
+      console.log(`request method: ${req.method}`);
+    }
+    next();
   });
 
   server.get("/p/:id", (req, res) => {
@@ -20,7 +24,7 @@ const dev = process.env.NODE_ENV !== "production";
     return nextApp.render(req, res, actualPage, queryParams);
   });
 
-  server.use((req, res) => {
+  server.all("*", (req, res) => {
     handle(req, res);
   });
 
