@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Row } from "../data";
+import { Row } from "../../data";
 
 const Component: React.FC<Row> = props => (
   <tr>

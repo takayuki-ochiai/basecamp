@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Rows } from "../data";
+import { Rows } from "../../data";
 import TR from "./tr";
 
 type Props = {
