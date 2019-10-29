@@ -1,6 +1,9 @@
 import React from "react";
 import App, { AppContext } from "next/app";
 
+// このレイヤーでログイン状態を管理する
+import FirebaseApp from "../components/FirebaseApp";
+
 export default class extends App {
   static async getInitialProps({ Component, ctx }: AppContext) {
     let pageProps = {};
@@ -12,6 +15,10 @@ export default class extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    return <Component {...pageProps} />;
+    return (
+      <FirebaseApp>
+        <Component {...pageProps} />
+      </FirebaseApp>
+    );
   }
 }
