@@ -4,6 +4,8 @@
 # for Frontend
 node_modules
 .next
+services/frontend/src/credentials/client.ts
+services/frontend/src/credentials/server.json
 
 # for TypeScript tutorial
 services/frontend/tutorial

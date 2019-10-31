@@ -66,6 +66,27 @@
 - 参考記事
   - https://qiita.com/matkatsu8/items/f0a592f713e68a8d95b7
 
+- Firebaseの環境構築
+  - GCPで新しくプロジェクトを構築
+  - GCPで作ったプロジェクトをもとにFirebaseのプロジェクト作成
+  - Firebaseのメニューから開発→Authentication→ログイン方法の設定
+  - 承認済みドメインの追加
+    - Route53に登録したドメイン名をあらかじめ追加しておく
+  - クライアント用のConfigを取得
+    - プロジェクトの設定→全般→マイアプリからWebアプリを選択して3つ登録する
+      - 開発環境用アプリ
+      - ステージング用アプリ
+      - 本番用アプリ
+    - アプリごとに出力されたAPIKey等をコピーする
+      - 公開していい情報ではあるらしいが、念の為gitignoreするファイルに記載しておいた方がいいだろう
+      - credentials/client.tsを設定
+    - 参考) https://firebase.google.com/docs/web/setup?hl=ja
+  - サーバーサイド用のConfigを取得
+    - プロジェクトの設定→サービスアカウント→新しい秘密鍵の生成
+    - credentials/server.jsonを設定
+    - 参考) https://firebase.google.com/docs/admin/setup?hl=ja
+    
+
 # Architecture
 - 基本的には全てのアプリケーションはコンテナで開発、デプロイする設計
 
@@ -75,9 +96,7 @@
   - Hooksで副作用処理と状態管理が完結できるならReduxは使いたくない
     - Reduxまで覚えさせようとすると学習コストが高くて普及しづらいんだよね…
     - とはいえ、Hooksでどこまでできるか未知数なので、諦めてRedux入れるかもしれないが
-- SSRはbasecamp側では考慮していない。必要に応じてforkしたプロジェクトでNext.jsなどを使うこと
-  - Next.jsはあんまりいい評判を聞かないのでbasecampではサポートしないことにした
-- basecamp側では単純なログイン・認証機能のみを持ったSPAの実装までをサポートするものとする
+- basecamp側では単純なログイン・認証機能のみを持ったSSRも持ったSPAの実装までをサポートするものとする
 
 
 ### Backend

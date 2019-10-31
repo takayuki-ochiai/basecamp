@@ -10,8 +10,9 @@ export const FirebaseContext = createContext<FirebaseState>({
   auth: null
 });
 
-type UserState = {
-  user: User | null;
+export type UserState = {
+  // user: User | null;
+  user: firebase.User | null;
   credential: firebase.auth.UserCredential | null;
   setCredential: (credential: firebase.auth.UserCredential | null) => void;
 };
