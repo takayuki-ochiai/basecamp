@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
-import { rows } from "../../data";
+import { rows } from "../data";
 import THead from "../components/thead";
 import TBody from "../components/tbody";
 
