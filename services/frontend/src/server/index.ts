@@ -29,8 +29,12 @@ const firebase = admin.initializeApp(
     return nextApp.render(req, res, actualPage, queryParams);
   });
 
+  // Content-Typeがurlencodedなデータをなんかいい感じにparseするためのミドルウェア
+  // POSTされるデータのparse用。parseされたデータはreq.bodyに入ってくる
   express.use(Express.json());
-  // // TODO: 意味を調べる
+  // Content-Typeがurlencodedなデータをなんかいい感じにparseするためのミドルウェア
+  // POSTされるデータのparse用。parseされたデータはreq.bodyに入ってくる
+  // extended: trueだとqsライブラリでurlencodedされた値をparseする
   express.use(Express.urlencoded({ extended: true }));
   // cookie
   express.use(cookieParser());
