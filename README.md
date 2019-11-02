@@ -85,7 +85,9 @@
     - プロジェクトの設定→サービスアカウント→新しい秘密鍵の生成
     - credentials/server.jsonを設定
     - 参考) https://firebase.google.com/docs/admin/setup?hl=ja
-    
+- configファイルの設定
+  - frontend/configディレクトリの中にproduction.jsonやstaging.jsonを設定し、必要な設定を記入
+  - 基本的にはdefault.jsonの内容がそのまま使われるため、オーバーライドが必要なものだけ追記すること
 
 # Architecture
 - 基本的には全てのアプリケーションはコンテナで開発、デプロイする設計
