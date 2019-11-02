@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import * as firebase from "firebase";
-import "firebase/auth";
 import { FirebaseContext, UserContext } from "../contexts";
 import clientCredentials from "../../credentials/client";
 import axios from "axios";
@@ -35,7 +34,7 @@ const FirebaseApp: React.FC = ({ children }) => {
         return axios.post("/api/logout").then(() => {
           setUser(null);
           // ログアウトしたらトップ画面に戻る
-          Router.push("/login");
+          // Router.push("/login");
         });
       }
     });
