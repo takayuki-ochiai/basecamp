@@ -1,5 +1,3 @@
-import { firestore } from "firebase/app";
-
 export type User = {
   id?: string;
   screenName: string;
