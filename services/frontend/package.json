@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/server/index.ts",
+    "dev": "next build ./src/client && ts-node ./src/server/index.ts",
     "dev:watch": "ts-node-dev src/server/index.ts",
     "build": "next build",
     "start": "next start"
@@ -15,17 +15,19 @@
   "dependencies": {
     "@godaddy/terminus": "^4.2.1",
     "axios": "^0.19.0",
+    "config": "^3.2.4",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "firebase": "^6.6.1",
     "firebase-admin": "^5.8.2",
-    "next": "^9.1.1",
+    "next": "^9.1.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-firebaseui": "^4.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/config": "0.0.35",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.1",
     "@types/node": "^12.11.1",
