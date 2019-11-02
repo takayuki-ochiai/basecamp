@@ -1,3 +1,4 @@
+import url from "url";
 import Express from "express";
 import cookieParser from "cookie-parser";
 import next from "next";
@@ -5,7 +6,7 @@ import * as ENV from "./constant";
 import { createTerminus } from "@godaddy/terminus";
 import http from "http";
 import admin from "firebase-admin";
-// import serverCredential from "../credentials/server";
+import { ALLOW_ORIGIN_HOSTS } from "./constant";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -21,7 +22,23 @@ const firebase = admin.initializeApp(
   const handle = nextApp.getRequestHandler();
   await nextApp.prepare();
 
-  // TODO: CORS設定の準備
+  // リソース更新系メソッド（POST PUT PATCH DELETE）の場合はALLOW_ORIGIN_HOSTSに含まれるhostからのアクセスでなければならない
+  // CSRF対策
+  express.use((req, res, next) => {
+    if (
+      req.method === "POST" ||
+      req.method === "PUT" ||
+      req.method === "PATCH" ||
+      req.method === "DELETE"
+    ) {
+      const origin = req.get("origin");
+      const host = origin && url.parse(origin, false).host;
+      if (host != null && !ALLOW_ORIGIN_HOSTS.includes(host)) {
+        return res.sendStatus(400);
+      }
+    }
+    next();
+  });
 
   express.get("/p/:id", (req, res) => {
     const actualPage = "/post";
@@ -53,7 +70,11 @@ const firebase = admin.initializeApp(
       .createSessionCookie(idToken, { expiresIn })
       .then(
         sessionCookie => {
-          const options = { maxAge: expiresIn, httpOnly: true };
+          const options = {
+            maxAge: expiresIn,
+            httpOnly: true,
+            sameSite: "Lax"
+          };
           res.cookie("session", sessionCookie, options);
           res.end(JSON.stringify({ newSession: true }));
         },
@@ -69,7 +90,6 @@ const firebase = admin.initializeApp(
   });
 
   express.get("/about", (req, res) => {
-    console.log("about page called!!!");
     return nextApp.render(req, res, "/about");
   });
 
@@ -79,17 +99,14 @@ const firebase = admin.initializeApp(
   });
 
   express.get("/", (req, res) => {
-    console.log("index page called!!!");
     return nextApp.render(req, res, "/");
   });
 
   express.get("/childs", (req, res) => {
-    console.log("child page called!!!");
     return nextApp.render(req, res, "/childs");
   });
 
   express.use((req, res, next) => {
-    console.log("authentication start");
     const sessonCookie: string = req.cookies.session || "";
     firebase
       .auth()
