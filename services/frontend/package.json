@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next build ./src/client && ts-node ./src/server/index.ts",
+    "dev": "ts-node ./src/server/index.ts",
+    "production": "next build ./src/client && tsc && node ./src/server/index.js",
     "dev:watch": "ts-node-dev src/server/index.ts",
     "build": "next build",
     "start": "next start"
