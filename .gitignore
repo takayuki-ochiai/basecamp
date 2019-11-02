@@ -6,6 +6,7 @@ node_modules
 .next
 services/frontend/src/credentials/client.ts
 services/frontend/src/credentials/server.json
-
+services/frontend/config/production.json
+services/frontend/config/staging.json
 # for TypeScript tutorial
 services/frontend/tutorial

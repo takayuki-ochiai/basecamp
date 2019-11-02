@@ -6,6 +6,7 @@ import * as ENV from "./constant";
 import { createTerminus } from "@godaddy/terminus";
 import http from "http";
 import admin from "firebase-admin";
+import config from "config";
 import { ALLOW_ORIGIN_HOSTS } from "./constant";
 
 const dev = process.env.NODE_ENV !== "production";

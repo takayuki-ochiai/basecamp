@@ -2,3 +2,5 @@ node_modules
 npm-debug.log
 .next
 tutorial
+config/production.json
+node_modules
