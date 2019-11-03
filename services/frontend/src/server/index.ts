@@ -86,6 +86,19 @@ const firebase = admin.initializeApp(
 
   express.post("/api/logout", (req, res) => {
     res.clearCookie("session");
+    // cookieから削除するだけじゃなく、firebase側のtokenも無効化しないと、
+    // 何らかの要因でトークンを外部に晒してしまい、そのトークンによるセッションハイジャックを自主的に防ぐための
+    // アクションとしてのログアウトは期待通りに機能しなくなるため
+    const sessionCookie: string = req.cookies.session || "";
+    firebase
+      .auth()
+      .verifySessionCookie(sessionCookie)
+      .then(decodedClaims => {
+        // リフレッシュトークンをrevokeしつつtokensValidAfterTimeを現在のUTCにする
+        // ログイン状態の確認の時点でcheckForRevocation: trueにしているので、
+        // 次にバックエンドでログイン状態を確認した際にtokenがrevokeされていることを確認して、仮にトークンが漏洩してもログイン状態と判定しなくなる
+        return firebase.auth().revokeRefreshTokens(decodedClaims.sub);
+      });
     res.end(JSON.stringify({ status: "success" }));
   });
 
