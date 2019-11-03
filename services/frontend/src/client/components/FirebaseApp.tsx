@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import Router from "next/router";
 import * as firebase from "firebase";
 import { FirebaseContext, UserContext } from "../contexts";
 import clientCredentials from "../../../config/credentials/app/client";
 import axios from "axios";
 
 const FirebaseApp: React.FC = ({ children }) => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [currentUser, setUser] = useState<firebase.User | null>(null);
   const [
     credential,
     setCredential
@@ -19,7 +20,7 @@ const FirebaseApp: React.FC = ({ children }) => {
     auth = firebase.auth();
     // onAuthStateChangedは自分の返り値でオブザービングの解除関数を返すのでuseEffectの返り値にする
     const unsubscribe = auth.onAuthStateChanged(async firebaseUser => {
-      if (firebaseUser) {
+      if (firebaseUser !== null && currentUser === null) {
         firebaseUser
           .getIdToken()
           .then(idToken => {
@@ -28,12 +29,14 @@ const FirebaseApp: React.FC = ({ children }) => {
           .then(res => {
             setUser(firebaseUser);
           });
-      } else {
+      }
+
+      if (firebaseUser === null && currentUser !== null) {
         // 認証情報が空になったらStateのuser情報をnullにする
         return axios.post("/api/logout").then(() => {
           setUser(null);
           // ログアウトしたらトップ画面に戻る
-          // Router.push("/login");
+          Router.push("/login");
         });
       }
     });
@@ -42,7 +45,9 @@ const FirebaseApp: React.FC = ({ children }) => {
 
   return (
     <FirebaseContext.Provider value={{ auth }}>
-      <UserContext.Provider value={{ user, credential, setCredential }}>
+      <UserContext.Provider
+        value={{ user: currentUser, credential, setCredential }}
+      >
         {children}
       </UserContext.Provider>
     </FirebaseContext.Provider>
