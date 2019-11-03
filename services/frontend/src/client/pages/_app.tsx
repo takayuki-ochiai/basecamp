@@ -6,7 +6,9 @@ import FirebaseApp from "../components/FirebaseApp";
 import Link from "next/link";
 import * as firebase from "firebase";
 
-import { UserContext } from "../contexts/user";
+import { UserContext, UserDispatchContext, setUser } from "../contexts/user";
+import axios from "axios";
+import Router from "next/router";
 
 const layoutStyle = {
   margin: 20,
@@ -19,12 +21,22 @@ const linkStyle = {
 };
 
 const Header = () => {
-  const handleLogout = useCallback(() => {
-    firebase.auth().signOut();
-  }, []);
-
   const userContext = useContext(UserContext);
+  const dispatch = useContext(UserDispatchContext);
   const user = userContext.user;
+
+  const handleLogout = useCallback(() => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        return axios.post("/api/logout");
+      })
+      .then(() => {
+        dispatch(setUser(null));
+        Router.push("/");
+      });
+  }, []);
 
   // ログイン状態の時だけログアウトボタンを表示する
   return (
