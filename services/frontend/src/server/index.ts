@@ -119,12 +119,13 @@ const firebase = admin.initializeApp(
     return nextApp.render(req, res, "/childs");
   });
 
+  // ログイン状態の確認
   express.use((req, res, next) => {
-    const sessonCookie: string = req.cookies.session || "";
+    const sessionCookie: string = req.cookies.session || "";
     firebase
       .auth()
-      .verifySessionCookie(sessonCookie, true)
-      .then(() => {
+      .verifySessionCookie(sessionCookie, true)
+      .then(decodedIdToken => {
         next();
       })
       .catch(error => {
