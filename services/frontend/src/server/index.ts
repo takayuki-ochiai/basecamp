@@ -60,11 +60,6 @@ const firebase = admin.initializeApp(
   express.use(cookieParser());
   express.post("/api/login", (req, res) => {
     if (!req.body) return res.sendStatus(400);
-    // 既にセッションがある場合は新しくsessionCookieは発行しない
-    if (req.cookies.session != null) {
-      return res.end(JSON.stringify({ newSession: false }));
-    }
-
     const idToken = req.body.idToken.toString();
     // Set session expiration to 1 hour.
     const expiresIn = 60 * 60 * 1000;
