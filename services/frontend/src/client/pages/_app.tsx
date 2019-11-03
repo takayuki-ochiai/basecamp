@@ -6,7 +6,7 @@ import FirebaseApp from "../components/FirebaseApp";
 import Link from "next/link";
 import * as firebase from "firebase";
 
-import { UserContext, UserState } from "../contexts/";
+import { UserContext } from "../contexts/";
 
 const layoutStyle = {
   margin: 20,
@@ -45,6 +45,9 @@ const Links = () => {
           <a style={linkStyle}>Login</a>
         </Link>
       )}
+      <Link href="/childs">
+        <a style={linkStyle}>Childs</a>
+      </Link>
       <Link href="/about">
         <a style={linkStyle}>About</a>
       </Link>
@@ -56,7 +59,6 @@ export default class extends App {
   static async getInitialProps({ Component, ctx }: AppContext) {
     let pageProps = {};
     if (Component.getInitialProps) {
-      ctx.req!;
       pageProps = await Component.getInitialProps(ctx);
     }
     return { pageProps };

@@ -14,10 +14,15 @@ const FirebaseApp: React.FC = ({ children }) => {
 
   let auth: firebase.auth.Auth | null = null;
   useEffect(() => {
-    // 初回にしかinitializeしないようにする
+    // 初めてマウントされた時だけinitializeする
     firebase.initializeApp(clientCredentials.fireBase);
-    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+  }, []);
+
+  // currentUserの状態が変わったらオブザービングを再設定する
+  // currentUserの状態によってfirebaseで管理している認証状態が変わった時にログイン・ログアウトAPIにリクエストを送るかどうかが変わってくるため
+  useEffect(() => {
     auth = firebase.auth();
+    if (auth == null) return;
     // onAuthStateChangedは自分の返り値でオブザービングの解除関数を返すのでuseEffectの返り値にする
     const unsubscribe = auth.onAuthStateChanged(async firebaseUser => {
       if (firebaseUser !== null && currentUser === null) {
@@ -36,12 +41,12 @@ const FirebaseApp: React.FC = ({ children }) => {
         return axios.post("/api/logout").then(() => {
           setUser(null);
           // ログアウトしたらトップ画面に戻る
-          Router.push("/login");
+          Router.push("/");
         });
       }
     });
     return unsubscribe;
-  }, []);
+  }, [currentUser]);
 
   return (
     <FirebaseContext.Provider value={{ auth }}>

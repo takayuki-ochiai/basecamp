@@ -120,7 +120,7 @@ const firebase = admin.initializeApp(
         next();
       })
       .catch(error => {
-        res.redirect("/about");
+        res.redirect("/login");
       });
   });
 

@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import React from "react";
+import LoginOnly from "../components/LoginOnly";
 
 type Props = {
   childLabel: string;
@@ -11,5 +12,9 @@ const Parent: React.FC<Props> = props => (
   <ChildComponent>{props.childLabel}</ChildComponent>
 );
 
-const Component: NextPage = () => <Parent childLabel={"Child Label!!!"} />;
+const Component: NextPage = () => (
+  <LoginOnly>
+    <Parent childLabel={"Child Label!!!"} />
+  </LoginOnly>
+);
 export default Component;
