@@ -1,13 +1,9 @@
 {
-  "Customer": {
-    "dbConfig": {
-      "host": "localhost",
-      "port": 5984,
-      "dbName": "customers"
-    },
-    "credit": {
-      "initialLimit": 100,
-      "initialDays": 1
-    }
+  "Server": {
+    "host": "localhost",
+    "port": 3000,
+    "allowOriginHosts": ["localhost:3000"],
+    "credential": "/app/config/credentials/admin/development.json",
+    "secureCookie": false
   }
 }

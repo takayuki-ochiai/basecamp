@@ -70,23 +70,24 @@
   - GCPで新しくプロジェクトを構築
   - GCPで作ったプロジェクトをもとにFirebaseのプロジェクト作成
   - Firebaseのメニューから開発→Authentication→ログイン方法の設定
+    - メールアドレスとGoogleを有効にする
+    - Googleを有効にする際にプロジェクト名を聞かれるので、terraform等で使用しているプロジェクト名に合わせて記載する
+  - 開発→Authentication→テンプレート
+    - テンプレート言語を日本語に修正
   - 承認済みドメインの追加
     - Route53に登録したドメイン名をあらかじめ追加しておく
   - クライアント用のConfigを取得
-    - プロジェクトの設定→全般→マイアプリからWebアプリを選択して3つ登録する
-      - 開発環境用アプリ
-      - ステージング用アプリ
-      - 本番用アプリ
+    - プロジェクトの設定→全般→マイアプリからWebアプリを選択して登録する
     - アプリごとに出力されたAPIKey等をコピーする
       - 公開していい情報ではあるらしいが、念の為gitignoreするファイルに記載しておいた方がいいだろう
-      - credentials/client.tsを設定
+      - config/credentials/app/client.tsを設定
     - 参考) https://firebase.google.com/docs/web/setup?hl=ja
   - サーバーサイド用のConfigを取得
     - プロジェクトの設定→サービスアカウント→新しい秘密鍵の生成
-    - credentials/server.jsonを設定
+    - config/credentials/adminディレクトリの中に、環境ごとの秘密鍵のjsonを設定
     - 参考) https://firebase.google.com/docs/admin/setup?hl=ja
 - configファイルの設定
-  - frontend/configディレクトリの中にproduction.jsonやstaging.jsonを設定し、必要な設定を記入
+  - frontend/configディレクトリの中にproduction.jsonやtest.jsonを設定し、必要な設定を記入
   - 基本的にはdefault.jsonの内容がそのまま使われるため、オーバーライドが必要なものだけ追記すること
 
 # Architecture

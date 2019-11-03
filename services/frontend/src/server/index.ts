@@ -2,18 +2,19 @@ import url from "url";
 import Express from "express";
 import cookieParser from "cookie-parser";
 import next from "next";
-import * as ENV from "./constant";
 import { createTerminus } from "@godaddy/terminus";
 import http from "http";
 import admin from "firebase-admin";
 import config from "config";
-import { ALLOW_ORIGIN_HOSTS } from "./constant";
-
 const dev = process.env.NODE_ENV !== "production";
 
 const firebase = admin.initializeApp(
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  { credential: admin.credential.cert(require("../credentials/server.json")) },
+  {
+    credential: admin.credential.cert(
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      require(config.get("Server.credential"))
+    )
+  },
   "server"
 );
 
@@ -34,7 +35,8 @@ const firebase = admin.initializeApp(
     ) {
       const origin = req.get("origin");
       const host = origin && url.parse(origin, false).host;
-      if (host != null && !ALLOW_ORIGIN_HOSTS.includes(host)) {
+      const allowOriginHosts: string[] = config.get("Server.allowOriginHosts");
+      if (host != null && !allowOriginHosts.includes(host)) {
         return res.sendStatus(400);
       }
     }
@@ -66,6 +68,7 @@ const firebase = admin.initializeApp(
     const idToken = req.body.idToken.toString();
     // Set session expiration to 1 hour.
     const expiresIn = 60 * 60 * 1000;
+    const secureCookie: boolean = config.get("Server.secureCookie");
     firebase
       .auth()
       .createSessionCookie(idToken, { expiresIn })
@@ -74,7 +77,8 @@ const firebase = admin.initializeApp(
           const options = {
             maxAge: expiresIn,
             httpOnly: true,
-            sameSite: "Lax"
+            sameSite: "Lax",
+            secure: secureCookie
           };
           res.cookie("session", sessionCookie, options);
           res.end(JSON.stringify({ newSession: true }));
@@ -134,5 +138,5 @@ const firebase = admin.initializeApp(
   };
 
   createTerminus(server, { beforeShutdown });
-  server.listen(ENV.APP_PORT);
+  server.listen(config.get("Server.port"));
 })();

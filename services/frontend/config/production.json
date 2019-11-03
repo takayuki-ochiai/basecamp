@@ -1,0 +1,6 @@
+{
+  "Server": {
+    "credential": "/app/config/credentials/admin/production.json",
+    "secureCookie": true
+  }
+}

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Router from "next/router";
 import * as firebase from "firebase";
 import { FirebaseContext, UserContext } from "../contexts";
-import clientCredentials from "../../credentials/client";
+import clientCredentials from "../../../config/credentials/app/client";
 import axios from "axios";
 
 const FirebaseApp: React.FC = ({ children }) => {
@@ -15,7 +14,7 @@ const FirebaseApp: React.FC = ({ children }) => {
   let auth: firebase.auth.Auth | null = null;
   useEffect(() => {
     // 初回にしかinitializeしないようにする
-    firebase.initializeApp(clientCredentials);
+    firebase.initializeApp(clientCredentials.fireBase);
     // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     auth = firebase.auth();
     // onAuthStateChangedは自分の返り値でオブザービングの解除関数を返すのでuseEffectの返り値にする
