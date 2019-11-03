@@ -1,9 +1,27 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import * as firebase from "firebase";
+import axios from "axios";
+import { UserDispatchContext, setUser } from "../contexts/user";
 
 const Login = () => {
+  const dispatch = useContext(UserDispatchContext);
+
   const handleLogin = useCallback(() => {
-    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    firebase
+      .auth()
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(credential => {
+        const user = credential.user;
+        if (user === null) return;
+        user
+          .getIdToken()
+          .then(idToken => {
+            return axios.post("/api/login", { idToken });
+          })
+          .then(res => {
+            dispatch(setUser(user));
+          });
+      });
   }, []);
 
   return (

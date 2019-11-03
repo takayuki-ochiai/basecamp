@@ -6,7 +6,7 @@ import FirebaseApp from "../components/FirebaseApp";
 import Link from "next/link";
 import * as firebase from "firebase";
 
-import { UserContext } from "../contexts/";
+import { UserContext } from "../contexts/user";
 
 const layoutStyle = {
   margin: 20,

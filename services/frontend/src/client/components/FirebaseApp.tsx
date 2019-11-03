@@ -1,16 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import Router from "next/router";
 import * as firebase from "firebase";
-import { FirebaseContext, UserContext } from "../contexts";
+import {
+  UserContext,
+  UserDispatchContext,
+  userReducer,
+  setUser
+} from "../contexts/user";
+import { FirebaseContext } from "../contexts/firebase";
 import clientCredentials from "../../../config/credentials/app/client";
 import axios from "axios";
 
 const FirebaseApp: React.FC = ({ children }) => {
-  const [currentUser, setUser] = useState<firebase.User | null>(null);
-  const [
-    credential,
-    setCredential
-  ] = useState<firebase.auth.UserCredential | null>(null);
+  const [userState, dispatch] = useReducer(userReducer, {
+    user: null
+  });
+
+  const currentUser = userState.user;
 
   let auth: firebase.auth.Auth | null = null;
   useEffect(() => {
@@ -24,22 +30,13 @@ const FirebaseApp: React.FC = ({ children }) => {
     auth = firebase.auth();
     if (auth == null) return;
     // onAuthStateChangedは自分の返り値でオブザービングの解除関数を返すのでuseEffectの返り値にする
+    // onAuthStateChangedはサインインとサインアウトのときのみ発火する
+    // 実際にはSSRのたびに初期化されて呼ばれる
     const unsubscribe = auth.onAuthStateChanged(async firebaseUser => {
-      if (firebaseUser !== null && currentUser === null) {
-        firebaseUser
-          .getIdToken()
-          .then(idToken => {
-            return axios.post("/api/login", { idToken });
-          })
-          .then(res => {
-            setUser(firebaseUser);
-          });
-      }
-
+      dispatch(setUser(firebaseUser));
       if (firebaseUser === null && currentUser !== null) {
         // 認証情報が空になったらStateのuser情報をnullにする
         return axios.post("/api/logout").then(() => {
-          setUser(null);
           // ログアウトしたらトップ画面に戻る
           Router.push("/");
         });
@@ -50,10 +47,10 @@ const FirebaseApp: React.FC = ({ children }) => {
 
   return (
     <FirebaseContext.Provider value={{ auth }}>
-      <UserContext.Provider
-        value={{ user: currentUser, credential, setCredential }}
-      >
-        {children}
+      <UserContext.Provider value={userState}>
+        <UserDispatchContext.Provider value={dispatch}>
+          {children}
+        </UserDispatchContext.Provider>
       </UserContext.Provider>
     </FirebaseContext.Provider>
   );
