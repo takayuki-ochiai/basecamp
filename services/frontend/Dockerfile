@@ -1,6 +1,12 @@
 FROM node:12.13.0-slim as base
+ENV LANG C.UTF-8
 
-RUN apt-get update && apt-get install -y git
+RUN set -x && \
+    : "install package" && \
+    apt-get update && \
+    apt-get install -y git vim less && \
+    apt-get clean
+
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
@@ -27,4 +33,4 @@ FROM source as prod
 ENV NODE_ENV=production
 RUN npm run build
 ENTRYPOINT ["/tini", "--"]
-CMD ["ts-node","src/server/index.ts"]
+CMD ["npm", "run", "production"]
