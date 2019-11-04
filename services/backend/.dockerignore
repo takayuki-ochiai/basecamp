@@ -1,0 +1,39 @@
+*.rbc
+capybara-*.html
+.rspec
+/log
+/tmp
+/db/*.sqlite3*
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
+.DS_Store
+
+# Ignore bundler config.
+/.bundle
+
+# Environment normalization:
+/vendor/bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+/public/assets
+.byebug_history
+
+/public/packs
+/public/packs-test
+node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
