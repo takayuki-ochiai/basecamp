@@ -13,7 +13,25 @@ services:
       - ./services/frontend/tsconfig.json:/app/tsconfig.json:delegated
       - ./services/frontend/config:/app/config:delegated
     ports:
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./services/backend
+      target: dev
+    volumes:
+      - ./services/backend:/app:delegated
+    depends_on:
+      - mysql
+    ports:
       - "3000:3000"
+    environment:
+      DATABASE_DEVELOPMENT: database_development
+      DATABASE_TEST: database_test
+      RAILS_MAX_THREADS: 5
+      DATABASE_USER: mysql_user
+      DATABASE_PASSWORD: development_pass
+      DATABASE_HOST: mysql
+      TZ: Asia/Tokyo
   mysql:
     image: mysql:8.0.16
     environment:
