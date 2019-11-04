@@ -1,12 +1,3 @@
 .idea
 .terraform
 *.pub
-# for Frontend
-node_modules
-.next
-services/frontend/config/credentials/app/client.ts
-services/frontend/config/credentials/admin/development.json
-services/frontend/config/credentials/admin/production.json
-services/frontend/config/credentials/admin/staging.json
-# for TypeScript tutorial
-services/frontend/tutorial

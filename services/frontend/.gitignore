@@ -1,0 +1,7 @@
+# for Frontend
+node_modules
+.next
+config/credentials/app/client.ts
+config/credentials/admin/development.json
+config/credentials/admin/production.json
+config/credentials/admin/staging.json
