@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  node:
+  frontend:
     build:
       dockerfile: Dockerfile
       context: ./services/frontend
@@ -13,6 +13,9 @@ services:
       - ./services/frontend/tsconfig.json:/app/tsconfig.json:delegated
       - ./services/frontend/config:/app/config:delegated
     ports:
+      - "3001:3000"
+    environment:
+      TZ: Asia/Tokyo
   backend:
     build:
       dockerfile: Dockerfile
