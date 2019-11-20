@@ -16,13 +16,14 @@ services:
       - "3001:3000"
     environment:
       TZ: Asia/Tokyo
-  backend:
+  console:
     build:
       dockerfile: Dockerfile
-      context: ./services/backend
+      context: services/console
       target: dev
     volumes:
-      - ./services/backend:/app:delegated
+      - ./services/console:/app:delegated
+      - ./services/proto:/proto:delegated
     depends_on:
       - mysql
     ports:
