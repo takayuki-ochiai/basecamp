@@ -16,6 +16,18 @@ services:
       - "3001:3000"
     environment:
       TZ: Asia/Tokyo
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./services/backend
+      target: dev
+    ports:
+      - "8080:80"
+    volumes:
+      - ./services/backend/src:/go/src/backend
+    environment:
+      TZ: Asia/Tokyo
+    command: tail -f /dev/null
   console:
     build:
       dockerfile: Dockerfile
