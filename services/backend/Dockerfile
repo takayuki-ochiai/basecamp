@@ -4,5 +4,9 @@ WORKDIR /go/src/backend/
 
 # Develop Image
 FROM base as dev
+# for install realize
+RUN go get -v gopkg.in/urfave/cli.v2 && \
+    go get -v github.com/oxequa/realize
+
 ENV GO111MODULE on
-#CMD ["realize", "start", "--run"]
+CMD ["realize", "start"]

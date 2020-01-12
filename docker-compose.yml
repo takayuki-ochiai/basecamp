@@ -22,12 +22,12 @@ services:
       context: ./services/backend
       target: dev
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
       - ./services/backend/src:/go/src/backend
     environment:
       TZ: Asia/Tokyo
-    command: tail -f /dev/null
+    command: realize start
   console:
     build:
       dockerfile: Dockerfile
