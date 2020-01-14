@@ -8,12 +8,21 @@
 - ndenv
 - node.js
   - v12.13.0
+- Kubernetes
+  - v1.14.8
+- そのほかKubernetes関連ツール(全てbrew経由でインストール可能)
+  - k9s
+  - kustomize
+  - skaffold
+  - kubectx
+  - kubesec
 
 ## インフラ構築
 - TODO: ドメイン名の登録だけは事前にやっておく
 - TODO: プロジェクト名の置換方法を記載しておく
-- iamを構築
 - kmsを構築
+  - kmsは開発環境のkubesecでも使用する
+- iamを構築
 - ecrを構築
 - acmを構築
   - 認証にちょっと時間がかかるので注意
