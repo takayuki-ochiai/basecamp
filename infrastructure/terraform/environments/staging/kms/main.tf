@@ -18,7 +18,7 @@ resource "aws_kms_key" "customer_master_key" {
 }
 
 // マスターキーにはUUIDが割り当てられるが、わかりにくいのでエイリアスをつけることができる
-resource "aws_kms_alias" "sandbox" {
+resource "aws_kms_alias" "master_alias" {
   // エイリアスでつける名前にはalias/というプレフィックスが必要
   name          = "alias/${var.project_name}-${var.env}"
   target_key_id = aws_kms_key.customer_master_key.id
