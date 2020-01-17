@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-config
+data:
+  LC_ALL: C.UTF-8
+  LANG: C.UTF-8
+  TZ: Asia/Tokyo

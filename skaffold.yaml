@@ -1,0 +1,28 @@
+apiVersion: skaffold/v1
+kind: Config
+metadata:
+  name: basecamp
+build:
+  tagPolicy:
+    sha256: {}
+  local:
+    useBuildkit: true
+profiles:
+  - name: development
+    build:
+      local:
+        push: false
+      artifacts:
+        - image: basecamp/backend
+          context: services/backend
+          sync:
+            manual:
+              - src: "src/**/*"
+                dest: "/go/src/backend"
+                strip: "src"
+          docker:
+            dockerfile: ./Dockerfile
+            target: dev
+    deploy:
+      kustomize:
+        path: infrastructure/k8s/overlays/development

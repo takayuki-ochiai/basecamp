@@ -8,5 +8,7 @@ FROM base as dev
 RUN go get -v gopkg.in/urfave/cli.v2 && \
     go get -v github.com/oxequa/realize
 
+COPY ./src .
+
 ENV GO111MODULE on
 CMD ["realize", "start"]

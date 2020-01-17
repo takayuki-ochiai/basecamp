@@ -4,12 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
+	"github.com/go-kit/kit/endpoint"
+	httptransport "github.com/go-kit/kit/transport/http"
 	"log"
 	"net/http"
 	"strings"
-	"github.com/go-kit/kit/endpoint"
-	httptransport "github.com/go-kit/kit/transport/http"
 )
 
 // StringService provieds operations on strings
@@ -70,10 +69,7 @@ func makeCountEndpoint(svc StringService) endpoint.Endpoint {
 	}
 }
 
-
-
 func main() {
-	fmt.Printf("hogehoge")
 	svc := stringService{}
 
 	uppercaseHandler := httptransport.NewServer(
