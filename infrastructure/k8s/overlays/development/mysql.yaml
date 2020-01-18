@@ -28,6 +28,7 @@ spec:
     envFrom:
       - configMapRef:
           name: mysql-env
+        prefix: MY_PREFIX_
   volumes:
   - name: mysql-volume
     persistentVolumeClaim:
