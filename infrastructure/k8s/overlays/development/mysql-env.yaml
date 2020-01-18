@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-env
+data:
+  MYSQL_DATABASE: database_development
+  MYSQL_DATABASE_TEST: database_test
+  MYSQL_USER: mysql_user
+  MYSQL_PASSWORD: development_pass
+  MYSQL_ROOT_PASSWORD: password
+

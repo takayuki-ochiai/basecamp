@@ -23,6 +23,11 @@ profiles:
           docker:
             dockerfile: ./Dockerfile
             target: dev
+        - image: basecamp/mysql
+          context: services/mysql
+          docker:
+            dockerfile: ./Dockerfile
+            target: dev
     deploy:
       kustomize:
         path: infrastructure/k8s/overlays/development
