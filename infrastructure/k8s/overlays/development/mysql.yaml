@@ -9,6 +9,8 @@ spec:
   - protocol: TCP
     port: 3306
     targetPort: 3306
+    nodePort: 30001
+  type: NodePort
 ---
 apiVersion: v1
 kind: Pod
@@ -26,8 +28,8 @@ spec:
     - name: mysql-volume
       mountPath: /var/lib/mysql
     envFrom:
-      - configMapRef:
-          name: mysql-env
+      - secretRef:
+          name: mysql-secret
         prefix: MYSQL_
   volumes:
   - name: mysql-volume

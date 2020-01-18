@@ -4,4 +4,4 @@ resources:
   - backend.yaml
   - mysql.yaml
   - mysql-volume.yaml
-  - mysql-env.yaml
+  - mysql-secret.yaml

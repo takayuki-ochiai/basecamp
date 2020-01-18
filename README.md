@@ -17,6 +17,7 @@
   - kubectx
   - kubesec
 
+
 ## インフラ構築
 - TODO: ドメイン名の登録だけは事前にやっておく
 - TODO: プロジェクト名の置換方法を記載しておく
@@ -51,6 +52,11 @@
 - elasticacheを構築
   - 依存するリソース
     - network
+
+## k8s
+- kubesecで暗号化しているSecretがあるので復号してから使う
+  - `kubesec decrypt infrastructure/k8s/overlays/development/mysql-secret-encrypted.yaml`
+
 
 ## Frontend
 - デプロイ等の都合上Dockerコンテナで開発しているが、IDEで参照するnode.jsやnode_modulesはホスト側にインストールする必要がある点に注意
