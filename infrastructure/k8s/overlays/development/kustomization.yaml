@@ -5,3 +5,4 @@ resources:
   - mysql.yaml
   - mysql-volume.yaml
   - mysql-secret.yaml
+  - console.yaml

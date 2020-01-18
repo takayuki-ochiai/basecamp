@@ -28,6 +28,15 @@ profiles:
           docker:
             dockerfile: ./Dockerfile
             target: dev
+        - image: basecamp/console
+          context: services/console
+          sync:
+            manual:
+              - src: "**/*"
+                dest: "/app"
+          docker:
+            dockerfile: ./Dockerfile
+            target: dev
     deploy:
       kustomize:
         path: infrastructure/k8s/overlays/development

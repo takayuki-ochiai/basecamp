@@ -29,9 +29,7 @@ RUN set -x && \
 
 EXPOSE  3000
 WORKDIR $WORKSPACE
-ADD Gemfile Gemfile
-ADD Gemfile.lock Gemfile.lock
-
+ADD . $WORKSPACE
 RUN set -x && \
     : "create directory" && \
     mkdir -p $WORKSPACE $BUNDLE_APP_CONFIG && \
@@ -42,19 +40,17 @@ USER rails
 RUN set -x && \
     : "install rails dependent packages" && \
     bundle update && \
-    bundle install
+    bundle install && \
+    yarn install
+
+COPY --chown=rails:rails . .
 
 # Develop Image
 FROM base as dev
 ENV RAILS_ENV development
 CMD ["rails", "server", "-b", "0.0.0.0"]
 
-# Source Image
-FROM base as source
-COPY --chown=rails:rails . .
-ADD . $WORKSPACE
-
 # Production Image
-FROM source as prod
+FROM base as prod
 ENV RAILS_ENV production
 # TODO: 暗号化やらassets precompileやら
