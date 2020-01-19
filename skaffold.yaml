@@ -13,6 +13,15 @@ profiles:
       local:
         push: false
       artifacts:
+        - image: basecamp/frontend
+          context: services/frontend
+          sync:
+            manual:
+              - src: "**/*"
+                dest: "/app"
+          docker:
+            dockerfile: ./Dockerfile
+            target: dev
         - image: basecamp/backend
           context: services/backend
           sync:
