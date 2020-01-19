@@ -31,10 +31,19 @@ module "public_subnet_2" {
   map_public_ip_on_launch = true
 }
 
-module "private_subnet_1" {
+module "public_subnet_3" {
   source                  = "../../../modules/aws/vpc/subnet"
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = "10.2.3.0/24"
+  availability_zone       = "ap-northeast-1d"
+  name                    = "${var.project_name}-${var.env}-public-subnet-3"
+  map_public_ip_on_launch = true
+}
+
+module "private_subnet_1" {
+  source                  = "../../../modules/aws/vpc/subnet"
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.2.4.0/24"
   availability_zone       = "ap-northeast-1a"
   name                    = "${var.project_name}-${var.env}-private-subnet-1"
   map_public_ip_on_launch = false
@@ -43,9 +52,18 @@ module "private_subnet_1" {
 module "private_subnet_2" {
   source                  = "../../../modules/aws/vpc/subnet"
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.2.4.0/24"
+  cidr_block              = "10.2.5.0/24"
   availability_zone       = "ap-northeast-1c"
   name                    = "${var.project_name}-${var.env}-private-subnet-2"
+  map_public_ip_on_launch = false
+}
+
+module "private_subnet_3" {
+  source                  = "../../../modules/aws/vpc/subnet"
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.2.6.0/24"
+  availability_zone       = "ap-northeast-1c"
+  name                    = "${var.project_name}-${var.env}-private-subnet-3"
   map_public_ip_on_launch = false
 }
 
