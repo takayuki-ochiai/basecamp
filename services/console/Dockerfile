@@ -1,5 +1,4 @@
 FROM ruby:2.6.5-slim as base
-ENV LANG C.UTF-8
 ENV WORKSPACE /app
 
 RUN set -x && \
@@ -27,9 +26,12 @@ RUN set -x && \
     groupadd -r --gid 1000 rails && \
     useradd -m -r --uid 1000 --gid 1000 rails
 
+RUN curl -sL -o /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 && \
+    chmod +x /usr/local/bin/dumb-init
+
 EXPOSE  3000
 WORKDIR $WORKSPACE
-ADD . $WORKSPACE
+COPY --chown=rails:rails Gemfile Gemfile.lock package.json yarn.lock ./
 RUN set -x && \
     : "create directory" && \
     mkdir -p $WORKSPACE $BUNDLE_APP_CONFIG && \
@@ -43,14 +45,16 @@ RUN set -x && \
     bundle install && \
     yarn install
 
+FROM base as source
 COPY --chown=rails:rails . .
 
 # Develop Image
-FROM base as dev
+FROM source as dev
 ENV RAILS_ENV development
-CMD ["rails", "server", "-b", "0.0.0.0"]
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
 # Production Image
-FROM base as prod
+FROM source as prod
 ENV RAILS_ENV production
 # TODO: 暗号化やらassets precompileやら

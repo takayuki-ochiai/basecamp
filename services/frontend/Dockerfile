@@ -1,5 +1,4 @@
 FROM node:12.13.0-slim as base
-ENV LANG C.UTF-8
 
 RUN set -x && \
     : "install package" && \
@@ -7,9 +6,8 @@ RUN set -x && \
     apt-get install -y git vim less && \
     apt-get clean
 
-ENV TINI_VERSION v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
+RUN curl -sL -o /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 && \
+    chmod +x /usr/local/bin/dumb-init
 EXPOSE 3000
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
@@ -17,20 +15,21 @@ WORKDIR /app
 USER node
 COPY --chown=node:node package.json package-lock.json tsconfig.json ./
 RUN npm ci && npm cache clean --force
-
-# Develop Image
-FROM base as dev
-ENV NODE_ENV=development
 ENV PATH=/app/node_modules/.bin:$PATH
-CMD ["npm", "run", "dev"]
+
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 
 # Source Image
 FROM base as source
 COPY --chown=node:node . .
 
+# Develop Image
+FROM source as dev
+ENV NODE_ENV=development
+CMD ["npm", "run", "dev"]
+
 # Production Image
 FROM source as prod
 ENV NODE_ENV=production
 RUN npm run build
-ENTRYPOINT ["/tini", "--"]
 CMD ["npm", "run", "production"]
