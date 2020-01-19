@@ -23,6 +23,7 @@ spec:
       app: backend
   template:
     metadata:
+      name: backend
       labels:
         app: backend
     spec:
