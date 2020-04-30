@@ -2,7 +2,7 @@ bases:
   - ../../base
 resources:
   - frontend.yaml
-  - backend.yaml
+#  - backend.yaml
   - mysql.yaml
   - mysql-volume.yaml
   - mysql-secret.yaml

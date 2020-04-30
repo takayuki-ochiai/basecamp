@@ -22,16 +22,16 @@ profiles:
           docker:
             dockerfile: ./Dockerfile
             target: dev
-        - image: basecamp/backend
-          context: services/backend
-          sync:
-            manual:
-              - src: "src/**/*"
-                dest: "/go/src/backend"
-                strip: "src"
-          docker:
-            dockerfile: ./Dockerfile
-            target: dev
+#        - image: basecamp/backend
+#          context: services/backend
+#          sync:
+#            manual:
+#              - src: "src/**/*"
+#                dest: "/go/src/backend"
+#                strip: "src"
+#          docker:
+#            dockerfile: ./Dockerfile
+#            target: dev
         - image: basecamp/mysql
           context: services/mysql
           docker:
