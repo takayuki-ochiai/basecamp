@@ -45,6 +45,9 @@ RUN set -x && \
     bundle install && \
     yarn install
 
+# debug用にsleep infinityで起動するようにする
+CMD ["sleep", "infinity"]
+
 FROM base as source
 COPY --chown=rails:rails . .
 

@@ -134,6 +134,11 @@
 - 高トラフィックを低コストで処理するというニーズを満たすサーバーはGolangで実装するかも
   - なんらかの配信機能やログ計測機能のためのサーバーを想定
 
+### Console
+#### Gemの更新
+skaffoldのconsoleのimage buildのターゲットはbaseにする(devのままだとsource　imageを作るときに古いGemfile.lockdで上書きされる)。
+あとはいつも通り　`skaffold dev --profile development` で起動する。consoleのimageがビルドされたらconsoleのコンテナの中にshellでアタッチする。
+Gemfile.lockが新しいものになっているはずなので、コピーしてローカルのGemfile.lockを書き換える。
 
 ## Middleware
 - DBにはMySQL, KVSにはRedisを使用する
@@ -144,4 +149,8 @@
 - 本番用とステージング用で同じアカウントを利用するが、別々のリソース、ロールを割り当てる
   - 本来は環境別に別アカウントにした方が安全だが、開発時に必要な品質を担保した上でスピードを重視するためこの構成とする
 - Applicationは全てコンテナ化されている前提とし、AWS ECSにコンテナをデプロイする形式
+
+## 開発環境の起動
+`skaffold dev --profile development`
+
 
