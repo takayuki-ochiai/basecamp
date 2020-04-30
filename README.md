@@ -16,6 +16,8 @@
   - skaffold
   - kubectx
   - kubesec
+  - helm
+  - argo
 
 
 ## インフラ構築
@@ -37,6 +39,8 @@
 - route53を構築
   - 依存するリソース
     - alb
+- eksを構築
+  - 
 - ecsを構築
   - あらかじめキーペアを作成しておくこと
   - 作成した公開鍵をプロジェクトディレクトリに置いて、パスをpublic_key_path変数にセットすること
