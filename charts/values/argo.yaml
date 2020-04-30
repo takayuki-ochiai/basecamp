@@ -1,0 +1,13 @@
+useDefaultArtifactRepo: true
+artifactRepository:
+  archiveLogs: false
+  s3:
+    endpoint: argo-minio.argo:9000
+    bucket: argo-artifacts
+    insecure: true
+    accessKeySecret:
+      name: argo-minio
+      key: accesskey
+    secretKeySecret:
+      name: argo-minio
+      key: secretkey

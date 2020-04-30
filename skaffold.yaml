@@ -49,3 +49,15 @@ profiles:
     deploy:
       kustomize:
         path: infrastructure/k8s/overlays/development
+      helm:
+        releases:
+          - name: argo-minio
+            chartPath: charts/argo-minio
+            skipBuildDependencies: true
+            valuesFiles:
+              - charts/values/argo-minio.yaml
+          - name: argo
+            chartPath: charts/argo
+            skipBuildDependencies: true
+            valuesFiles:
+              - charts/values/argo.yaml
