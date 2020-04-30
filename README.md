@@ -136,7 +136,7 @@
 
 ### Console
 #### Gemの更新
-skaffoldのconsoleのimage buildのターゲットはbaseにする(devのままだとsource　imageを作るときに古いGemfile.lockdで上書きされる)。
+skaffoldのconsoleのimage buildのターゲットはbaseにする(devのままだとsource　imageを作るときに古いGemfile.lockで上書きされる)。
 あとはいつも通り　`skaffold dev --profile development` で起動する。consoleのimageがビルドされたらconsoleのコンテナの中にshellでアタッチする。
 Gemfile.lockが新しいものになっているはずなので、コピーしてローカルのGemfile.lockを書き換える。
 
