@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  # 必須パラメーター。アプリケーションのバージョン
+  version: 0.0.1
+  # 必須パラメーター。このAPI仕様書を用いて作成するアプリケーションのタイトル。
+  title: Training Menu API
+  # 任意パラメーター。アプリケーションについての説明
+  descriptsion: A simple menu for exercise
+  basePath: /training/v1
+servers:
+# 必須パラメーター。APIターゲットホストのURL。
+- url: http://localhost/training/v1
+
+# エンドポイントを記載するオブジェクト
+paths:
+  # パスとして/plansを定義している。
+  /plans:
+    # REST APIのメソッド。ここではパス/plansに対し、GETメソッドを定義している。
+    get:
+      # 任意パラメーター。パス/plansに対し定義したGETメソッドについての説明。
+      description: Return a list of training plans
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of plans on a page
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Specifies the page number of the plans to be displayed
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successfully returned a list of training plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - plan_id
+                  properties:
+                    plan_id:
+                      type: integer
+                    plan_name:
+                      type: string
+                    planner_name:
+                      type: string
+                    duration:
+                      type: integer
+                    difficulty:
+                      type: integer
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

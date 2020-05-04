@@ -46,6 +46,11 @@ profiles:
           docker:
             dockerfile: ./Dockerfile
             target: dev
+        - image: basecamp/mock-server
+          context: services/openapi
+          docker:
+            dockerfile: ./Dockerfile
+            target: base
     deploy:
       kustomize:
         path: infrastructure/k8s/overlays/development

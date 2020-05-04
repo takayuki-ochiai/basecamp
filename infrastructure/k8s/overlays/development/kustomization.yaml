@@ -7,3 +7,4 @@ resources:
   - mysql-volume.yaml
   - mysql-secret.yaml
   - console.yaml
+  - mock-server.yaml
