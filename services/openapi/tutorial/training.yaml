@@ -20,16 +20,8 @@ paths:
       # 任意パラメーター。パス/plansに対し定義したGETメソッドについての説明。
       description: Return a list of training plans
       parameters:
-      - name: limit
-        in: query
-        description: Limit the number of plans on a page
-        schema:
-          type: integer
-      - name: offset
-        in: query
-        description: Specifies the page number of the plans to be displayed
-        schema:
-          type: integer
+        - $ref: '#/components/parameters/pageLimit'
+        - $ref: '#/components/parameters/pageOffset'
       responses:
         '200':
           description: Successfully returned a list of training plans
@@ -38,26 +30,81 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  required:
-                    - plan_id
-                  properties:
-                    plan_id:
-                      type: integer
-                    plan_name:
-                      type: string
-                    planner_name:
-                      type: string
-                    duration:
-                      type: integer
-                    difficulty:
-                      type: integer
+                  $ref: '#/components/schemas/plan'
         '400':
-          description: Invalid request
+          $ref: '#/components/responses/400Error'
+    post:
+      description: Registar a new plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/plan'
+      responses:
+        '200':
+          description: Successfully returned a list of training plans
+        '400':
+          $ref: '#/components/responses/400Error'
+
+  /plans/{planner_name}:
+    get:
+      description: Get information about the plan registered by the described planner
+      parameters:
+      - name: planner_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returned a list of training plans
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/plan'
+        '400':
+          $ref: '#/components/responses/400Error'
+
+components:
+  schemas:
+    plan:
+      type: object
+      required:
+      - plan_id
+      properties:
+        plan_id:
+          type: integer
+        plan_name:
+          type: string
+        planner_name:
+          type: string
+        duration:
+          type: integer
+        difficulty:
+          type: integer
+  parameters:
+    pageLimit:
+      name: limit
+      in: query
+      description: Limit the number of plans on a page
+      schema:
+        type: integer
+    pageOffset:
+      name: offset
+      in: query
+      description: Specifies the page number of the plans to be displayed
+      schema:
+        type: integer
+  responses:
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
