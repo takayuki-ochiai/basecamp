@@ -1,0 +1,2 @@
+class PublicCalendar < Calendar
+end

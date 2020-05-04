@@ -1,0 +1,2 @@
+class PrivateCalendar < Calendar
+end
