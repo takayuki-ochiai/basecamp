@@ -1,3 +1,3 @@
 class ScheduleDatePeriod < ApplicationRecord
-  belongs_to :schedule, as: :schedulable
+  has_one :schedule, as: :schedulable
 end
