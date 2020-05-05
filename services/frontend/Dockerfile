@@ -28,7 +28,7 @@ COPY --chown=node:node . .
 # Develop Image
 FROM source as dev
 ENV NODE_ENV=development
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev:watch"]
 
 # Production Image
 FROM source as prod
