@@ -13,7 +13,7 @@ const firebase = admin.initializeApp(
     credential: admin.credential.cert(
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require(config.get("Server.credential"))
-    )
+    ),
   },
   "server"
 );
@@ -68,38 +68,20 @@ const firebase = admin.initializeApp(
       .auth()
       .createSessionCookie(idToken, { expiresIn })
       .then(
-        sessionCookie => {
+        (sessionCookie) => {
           const options = {
             maxAge: expiresIn,
             httpOnly: true,
             sameSite: "Lax",
-            secure: secureCookie
+            secure: secureCookie,
           };
           res.cookie("session", sessionCookie, options);
           res.end(JSON.stringify({ newSession: true }));
         },
-        error => {
+        (error) => {
           res.status(401).send("UNAUTHORIZED REQUEST!");
         }
       );
-  });
-
-  express.post("/api/logout", (req, res) => {
-    res.clearCookie("session");
-    // cookieから削除するだけじゃなく、firebase側のtokenも無効化しないと、
-    // 何らかの要因でトークンを外部に晒してしまい、そのトークンによるセッションハイジャックを自主的に防ぐための
-    // アクションとしてのログアウトは期待通りに機能しなくなるため
-    const sessionCookie: string = req.cookies.session || "";
-    firebase
-      .auth()
-      .verifySessionCookie(sessionCookie)
-      .then(decodedClaims => {
-        // リフレッシュトークンをrevokeしつつtokensValidAfterTimeを現在のUTCにする
-        // ログイン状態の確認の時点でcheckForRevocation: trueにしているので、
-        // 次にバックエンドでログイン状態を確認した際にtokenがrevokeされていることを確認して、仮にトークンが漏洩してもログイン状態と判定しなくなる
-        return firebase.auth().revokeRefreshTokens(decodedClaims.sub);
-      });
-    res.end(JSON.stringify({ status: "success" }));
   });
 
   express.get("/about", (req, res) => {
@@ -125,12 +107,38 @@ const firebase = admin.initializeApp(
     firebase
       .auth()
       .verifySessionCookie(sessionCookie, true)
-      .then(decodedIdToken => {
+      .then((decodedIdToken) => {
         next();
       })
-      .catch(error => {
-        res.redirect("/login");
+      .catch((error) => {
+        console.log("Fail verifySessionCookie request!");
+        console.log(`url: ${req.url}`);
+        // res.redirect("/login");
       });
+  });
+
+  express.post("/api/user/:uid/initialData", (req, res) => {
+    console.log("initialData create!");
+    console.log(`uid: ${req.params.uid}`);
+    res.end(JSON.stringify({ status: "success" }));
+  });
+
+  express.post("/api/logout", (req, res) => {
+    res.clearCookie("session");
+    // cookieから削除するだけじゃなく、firebase側のtokenも無効化しないと、
+    // 何らかの要因でトークンを外部に晒してしまい、そのトークンによるセッションハイジャックを自主的に防ぐための
+    // アクションとしてのログアウトは期待通りに機能しなくなるため
+    const sessionCookie: string = req.cookies.session || "";
+    firebase
+      .auth()
+      .verifySessionCookie(sessionCookie)
+      .then((decodedClaims) => {
+        // リフレッシュトークンをrevokeしつつtokensValidAfterTimeを現在のUTCにする
+        // ログイン状態の確認の時点でcheckForRevocation: trueにしているので、
+        // 次にバックエンドでログイン状態を確認した際にtokenがrevokeされていることを確認して、仮にトークンが漏洩してもログイン状態と判定しなくなる
+        return firebase.auth().revokeRefreshTokens(decodedClaims.sub);
+      });
+    res.end(JSON.stringify({ status: "success" }));
   });
 
   express.use((req, res) => {
@@ -141,7 +149,7 @@ const firebase = admin.initializeApp(
   // graceful shutdown
   const beforeShutdown = () => {
     // SIGTERMシグナルが送信された後でもリクエストが流れてくる可能性を考慮し5秒待つ
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(resolve, 5000);
     });
   };
