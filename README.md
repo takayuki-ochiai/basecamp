@@ -125,6 +125,11 @@
 - 基本はNext.js + TypeScript + Firebase Authentication
 - basecamp側では単純なログイン・認証機能のみを持ったSSRも持ったSPAの実装までをサポートするものとする
 
+#### package-lock.jsonの更新
+skaffoldのconsoleのimage buildのターゲットはbaseにする(devのままだとsource imageを作るときに古いpackage-lock.jsonで上書きされる)。
+あとはいつも通り　`skaffold dev --profile development` で起動する。
+frontendのコンテナの中に入って `npm install`を実行。コンテナ内のpackage-lock.jsonをコピーしてホストのpackage-lock.jsonに貼り付ける。
+
 ### Backend（管理画面 + BFFから呼びだすAPI）
 - Frontendが呼び出すbackendのAPIはRuby on Rails + gRPCを使用する
   - gRPCとRubyの相性はいいとは言えないが、

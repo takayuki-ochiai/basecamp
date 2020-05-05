@@ -18,6 +18,8 @@ RUN npm ci && npm cache clean --force
 ENV PATH=/app/node_modules/.bin:$PATH
 
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+# デバッグ、パッケージ更新用
+CMD ["sleep", "infinity"]
 
 # Source Image
 FROM base as source
