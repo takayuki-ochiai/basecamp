@@ -50,7 +50,7 @@ profiles:
           context: services/openapi
           docker:
             dockerfile: ./Dockerfile
-            target: base
+            target: v1mock
     deploy:
       kustomize:
         path: infrastructure/k8s/overlays/development
