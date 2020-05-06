@@ -7,8 +7,8 @@ const defaultConfig = {
     storageBucket: "",
     messagingSenderId: "",
     appId: "",
-    measurementId: ""
-  }
+    measurementId: "",
+  },
 };
 
 const productionConfig = {
@@ -20,8 +20,8 @@ const productionConfig = {
     storageBucket: "",
     messagingSenderId: "",
     appId: "",
-    measurementId: ""
-  }
+    measurementId: "",
+  },
 };
 
 const stagingConfig = {
@@ -33,8 +33,8 @@ const stagingConfig = {
     storageBucket: "",
     messagingSenderId: "",
     appId: "",
-    measurementId: ""
-  }
+    measurementId: "",
+  },
 };
 
 if (process.env.NODE_ENV === "production") {
