@@ -47,7 +47,7 @@ profiles:
             dockerfile: ./Dockerfile
             target: dev
         - image: basecamp/mock-server
-          context: services/openapi
+          context: services/console/openapi
           docker:
             dockerfile: ./Dockerfile
             target: v1mock
