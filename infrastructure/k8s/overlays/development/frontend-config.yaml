@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  BFF_ENV: 'development'
+  BFF_HOST: 'localhost'
+  BFF_PORT: '3000'
+  BFF_ALLOW_ORIGIN_HOSTS: '["localhost:3000"]'
+  BFF_ADMIN_CREDENTIAL: '/app/config/credentials/admin/development.json'
+  BFF_SECURE_COOKIE: 'false'

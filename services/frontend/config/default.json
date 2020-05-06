@@ -1,9 +1,0 @@
-{
-  "Server": {
-    "host": "localhost",
-    "port": 3000,
-    "allowOriginHosts": ["localhost:3000"],
-    "credential": "/app/config/credentials/admin/development.json",
-    "secureCookie": false
-  }
-}

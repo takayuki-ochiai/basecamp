@@ -26,7 +26,10 @@ spec:
         app: frontend
     spec:
       containers:
-        - name: frontend
-          image: basecamp/frontend
-          ports:
-            - containerPort: 3000
+      - name: frontend
+        image: basecamp/frontend
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: frontend-config

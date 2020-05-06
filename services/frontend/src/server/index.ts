@@ -5,14 +5,17 @@ import next from "next";
 import { createTerminus } from "@godaddy/terminus";
 import http from "http";
 import admin from "firebase-admin";
-import config from "config";
-const dev = process.env.NODE_ENV !== "production";
+import Config from "./models/config";
+import Env from "./models/env";
+
+const config = new Config();
+const dev = config.get(Env.BFF_ENV) !== "production";
 
 const firebase = admin.initializeApp(
   {
     credential: admin.credential.cert(
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      require(config.get("Server.credential"))
+      require(config.get(Env.BFF_ADMIN_CREDENTIAL))
     ),
   },
   "server"
@@ -35,7 +38,7 @@ const firebase = admin.initializeApp(
     ) {
       const origin = req.get("origin");
       const host = origin && url.parse(origin, false).host;
-      const allowOriginHosts: string[] = config.get("Server.allowOriginHosts");
+      const allowOriginHosts: string[] = config.get(Env.BFF_ALLOW_ORIGIN_HOSTS);
       if (host != null && !allowOriginHosts.includes(host)) {
         return res.sendStatus(400);
       }
@@ -63,7 +66,7 @@ const firebase = admin.initializeApp(
     const idToken = req.body.idToken.toString();
     // Set session expiration to 1 hour.
     const expiresIn = 60 * 60 * 1000;
-    const secureCookie: boolean = config.get("Server.secureCookie");
+    const secureCookie: boolean = config.get(Env.BFF_SECURE_COOKIE);
     firebase
       .auth()
       .createSessionCookie(idToken, { expiresIn })
@@ -84,21 +87,25 @@ const firebase = admin.initializeApp(
       );
   });
 
+  express.get("/", (req, res) => {
+    return nextApp.render(req, res, "/");
+  });
+
   express.get("/about", (req, res) => {
     return nextApp.render(req, res, "/about");
+  });
+
+  express.get("/childs", (req, res) => {
+    return nextApp.render(req, res, "/childs");
+  });
+
+  express.get("/login", (req, res) => {
+    return nextApp.render(req, res, "/login");
   });
 
   // nextjsのフレームワークが返す静的アセットは認証なしでも見れるようにする
   express.all("/_next/*", (req, res) => {
     handle(req, res);
-  });
-
-  express.get("/", (req, res) => {
-    return nextApp.render(req, res, "/");
-  });
-
-  express.get("/childs", (req, res) => {
-    return nextApp.render(req, res, "/childs");
   });
 
   // ログイン状態の確認
@@ -120,6 +127,8 @@ const firebase = admin.initializeApp(
   express.post("/api/user/:uid/initialData", (req, res) => {
     console.log("initialData create!");
     console.log(`uid: ${req.params.uid}`);
+    console.log(`email: ${req.body.email}`);
+    // axios.post()
     res.end(JSON.stringify({ status: "success" }));
   });
 
@@ -155,5 +164,5 @@ const firebase = admin.initializeApp(
   };
 
   createTerminus(server, { beforeShutdown });
-  server.listen(config.get("Server.port"));
+  server.listen(config.get(Env.BFF_PORT));
 })();
