@@ -10,7 +10,7 @@ const Timer: React.FC = () => {
   }, []);
 
   const tick = useCallback(() => {
-    setTimeLeft(prev => (prev === 0 ? LIMIT : prev - 1));
+    setTimeLeft((prev) => (prev === 0 ? LIMIT : prev - 1));
   }, []);
 
   // 第一引数の関数がコンポーネントの初回レンダリング直前に実行される

@@ -20,7 +20,7 @@ const Counter: React.FC = () => {
   // 一回作ったら再生成しない
   const increment = useCallback(() => {
     // 前の状態を受け取って次の状態を返却する関数を登録しておけば、ハンドラ関数の再生成はいらなくなる！
-    setCount(prev => prev + 1);
+    setCount((prev) => prev + 1);
   }, []);
   if (tmpIncrement !== increment) {
     console.log("increment が生成された！");
@@ -28,7 +28,7 @@ const Counter: React.FC = () => {
   tmpIncrement = increment;
 
   // あえてレンダリングのたびに何度も再生成する書き方に
-  const decrement = () => setCount(prev => prev - 1);
+  const decrement = () => setCount((prev) => prev - 1);
   if (tmpDecrement !== decrement) {
     console.log("decrement が生成された！");
   }

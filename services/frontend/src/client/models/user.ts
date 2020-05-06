@@ -14,5 +14,5 @@ export const blankUser: User = {
   description: null,
   photoUrl: null,
   provider: "google",
-  providerUid: ""
+  providerUid: "",
 };

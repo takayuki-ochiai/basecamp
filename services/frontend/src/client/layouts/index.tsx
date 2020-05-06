@@ -1,6 +1,5 @@
 import React from "react";
 import { Head, Main, NextScript } from "next/document";
-import Link from "next/link";
 
 const Layout = () => (
   <html>

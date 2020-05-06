@@ -5,7 +5,7 @@ import {
   UserContext,
   UserDispatchContext,
   userReducer,
-  setUser
+  setUser,
 } from "../contexts/user";
 import { FirebaseContext } from "../contexts/firebase";
 import clientCredentials from "../../../config/credentials/app/client";
@@ -13,7 +13,7 @@ import axios from "axios";
 
 const FirebaseApp: React.FC = ({ children }) => {
   const [userState, dispatch] = useReducer(userReducer, {
-    user: null
+    user: null,
   });
 
   const currentUser = userState.user;
@@ -32,7 +32,7 @@ const FirebaseApp: React.FC = ({ children }) => {
     // onAuthStateChangedは自分の返り値でオブザービングの解除関数を返すのでuseEffectの返り値にする
     // onAuthStateChangedはサインインとサインアウトのときのみ発火する
     // 実際にはSSRのたびに初期化されて呼ばれる
-    const unsubscribe = auth.onAuthStateChanged(async firebaseUser => {
+    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
       dispatch(setUser(firebaseUser));
       if (firebaseUser === null && currentUser !== null) {
         // 認証情報が空になったらStateのuser情報をnullにする

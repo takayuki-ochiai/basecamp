@@ -1,5 +1,5 @@
 import React from "react";
-import { NextPage, NextPageContext } from "next";
+import { NextPageContext } from "next";
 
 type Props = {
   title: string;

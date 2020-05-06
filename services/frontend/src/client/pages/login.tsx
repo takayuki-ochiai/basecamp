@@ -10,15 +10,15 @@ const Login = () => {
     firebase
       .auth()
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then(credential => {
+      .then((credential) => {
         const user = credential.user;
         if (user === null) return;
         user
           .getIdToken()
-          .then(idToken => {
+          .then((idToken) => {
             return axios.post("/api/login", { idToken });
           })
-          .then(res => {
+          .then((res) => {
             dispatch(setUser(user));
           });
       });

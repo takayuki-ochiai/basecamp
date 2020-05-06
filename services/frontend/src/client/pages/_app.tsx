@@ -13,11 +13,11 @@ import Router from "next/router";
 const layoutStyle = {
   margin: 20,
   padding: 20,
-  border: "1px solid #DDD"
+  border: "1px solid #DDD",
 };
 
 const linkStyle = {
-  marginRight: 15
+  marginRight: 15,
 };
 
 const Header = () => {

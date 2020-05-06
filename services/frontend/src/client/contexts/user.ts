@@ -5,7 +5,7 @@ import { User } from "../models/user";
 const SetUser = "user/SetUser" as const;
 export const setUser = (user: firebase.User | null) => ({
   type: SetUser,
-  payload: { user }
+  payload: { user },
 });
 type Actions = ReturnType<typeof setUser>;
 
@@ -13,7 +13,7 @@ export function userReducer(state: UserState, action: Actions) {
   switch (action.type) {
     case SetUser: {
       return {
-        user: action.payload.user
+        user: action.payload.user,
       };
     }
     default: {

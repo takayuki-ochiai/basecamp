@@ -18,7 +18,7 @@ const Error = ({ title, errorCode }: Props) => (
 Error.getInitialProps = async ({ res }: NextPageContext) => {
   return {
     title: `Error: ${res!.statusCode}`,
-    errorCode: res!.statusCode
+    errorCode: res!.statusCode,
   };
 };
 

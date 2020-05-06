@@ -6,5 +6,5 @@ type FirebaseState = {
 };
 
 export const FirebaseContext = createContext<FirebaseState>({
-  auth: null
+  auth: null,
 });
