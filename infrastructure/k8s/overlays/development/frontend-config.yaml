@@ -9,4 +9,4 @@ data:
   BFF_ALLOW_ORIGIN_HOSTS: '["localhost:3000"]'
   BFF_ADMIN_CREDENTIAL: '/app/config/credentials/admin/development.json'
   BFF_SECURE_COOKIE: 'false'
-  BACKEND_ENDPOINT: 'http://console.default.svc.cluster.local'
+  BACKEND_ENDPOINT: 'http://console.default.svc.cluster.local:3000'

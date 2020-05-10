@@ -25,13 +25,15 @@ spec:
         app: console
     spec:
       containers:
-        - name: console
-          image: basecamp/console
-          envFrom:
-            - configMapRef:
-                name: common-config
-            - secretRef:
-                name: mysql-secret
-              prefix: MYSQL_
-          ports:
-            - containerPort: 3000
+      - name: console
+        image: basecamp/console
+        envFrom:
+        - configMapRef:
+            name: common-config
+        - configMapRef:
+            name: console-config
+        - secretRef:
+            name: mysql-secret
+          prefix: MYSQL_
+        ports:
+        - containerPort: 3000

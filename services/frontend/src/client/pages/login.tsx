@@ -19,6 +19,11 @@ const Login = () => {
             return axios.post("/api/login", { idToken });
           })
           .then((res) => {
+            return axios.post(`/api/users/${user.uid}/initialData`, {
+              email: user.email,
+            });
+          })
+          .then(() => {
             dispatch(setUser(user));
           });
       });

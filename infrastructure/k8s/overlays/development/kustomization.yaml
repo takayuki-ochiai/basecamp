@@ -8,4 +8,5 @@ resources:
   - mysql-volume.yaml
   - mysql-secret.yaml
   - console.yaml
+  - console-config.yaml
   - mock-server.yaml

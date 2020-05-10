@@ -36,7 +36,7 @@ const FirebaseApp: React.FC = ({ children }) => {
       dispatch(setUser(firebaseUser));
       if (firebaseUser === null && currentUser !== null) {
         // 認証情報が空になったらStateのuser情報をnullにする
-        return axios.post("/api/logout").then(() => {
+        return await axios.post("/api/logout").then(() => {
           // ログアウトしたらトップ画面に戻る
           Router.push("/");
         });
