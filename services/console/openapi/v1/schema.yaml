@@ -9,16 +9,9 @@ servers:
   - url: http://console/
 # エンドポイントを記載するオブジェクト
 paths:
-  /api/v1/users/{uid}/initial_data:
+  /api/v1/users:
     post:
       description: "ユーザーの初期データを構築するためのAPI"
-      parameters:
-      - in: path
-        name: uid
-        schema:
-          type: string
-        required: true
-        description: "Firebase Authentication ユーザーのID"
       requestBody:
         required: true
         content:
@@ -27,8 +20,12 @@ paths:
               type: object
               required:
               - email
+              - uid
               properties:
                 email:
+                  type: string
+                uid:
+                  description: "Firebase Authentication ユーザーのID"
                   type: string
       responses:
         '200':

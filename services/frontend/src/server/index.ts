@@ -132,11 +132,14 @@ const firebase = admin.initializeApp(
       });
   });
 
-  express.post("/api/users/:uid/initialData", async (req, res) => {
+  express.post("/api/users", async (req, res) => {
     const endpoint = config.get(Env.BACKEND_ENDPOINT);
     const backendResponse = await axios
-      .post(`${endpoint}/api/v1/users/${req.params.uid}/initial_data`, {
-        email: req.body.email,
+      .post(`${endpoint}/api/v1/users`, {
+        user: {
+          email: req.body.user.email,
+          uid: req.body.user.uid,
+        },
       })
       .catch((err) => {
         return err.response;

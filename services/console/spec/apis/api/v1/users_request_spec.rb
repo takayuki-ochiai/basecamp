@@ -7,9 +7,9 @@ RSpec.describe "API::V1::Users", type: :request do
     @committee_options ||= { schema_path: Rails.root.join('openapi', 'v1', 'schema.yaml').to_s }
   end
 
-  describe "POST /api/v1/users/hige/initial_data",  type: :request do
+  describe "POST /api/v1/users",  type: :request do
     it "レスポンスがAPIドキュメントと一致する" do
-      post '/api/v1/users/hige/initial_data', params: { email: 'ochiai@gmail.com' }
+      post '/api/v1/users', params: { user: { uid: 'hige', email: 'ochiai@gmail.com' }}
       # expect(1).to eq 1
       assert_schema_conform
     end

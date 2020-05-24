@@ -18,9 +18,12 @@ const Login = () => {
           .then((idToken) => {
             return axios.post("/api/login", { idToken });
           })
-          .then((res) => {
-            return axios.post(`/api/users/${user.uid}/initialData`, {
-              email: user.email,
+          .then(() => {
+            return axios.post("/api/users", {
+              user: {
+                email: user.email,
+                uid: user.uid,
+              },
             });
           })
           .then(() => {
