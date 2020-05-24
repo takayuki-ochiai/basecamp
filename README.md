@@ -57,11 +57,6 @@
   - 依存するリソース
     - network
 
-## k8s
-- kubesecで暗号化しているSecretがあるので復号してから使う
-  - `kubesec decrypt infrastructure/k8s/overlays/development/mysql-secret-encrypted.yaml`
-
-
 ## Frontend
 - デプロイ等の都合上Dockerコンテナで開発しているが、IDEで参照するnode.jsやnode_modulesはホスト側にインストールする必要がある点に注意
   - コンテナ用のnode_modulesとホスト用のnode_modulesの二重管理が必要
