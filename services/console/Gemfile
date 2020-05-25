@@ -42,6 +42,7 @@ gem 'trailblazer-rails' # if you are in rails.
 gem 'reform'
 gem 'dry-validation'
 gem 'dry-types'
+gem 'dry-monads'
 gem 'representable'
 gem 'multi_json'
 
