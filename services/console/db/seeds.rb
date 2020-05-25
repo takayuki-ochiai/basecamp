@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 private_user = User.create!(
   uid: 'hogehogehogheo',
   email: '4dqcPo7mP6.private.user@gmail.com'
@@ -21,6 +23,3 @@ PrivateCalendar.create!(
   user: org1_user,
   title: 'マイカレンダー'
 )
-
-
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOrganizationsUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :organizations_users do |t|
@@ -6,7 +8,7 @@ class CreateOrganizationsUsers < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :organizations_users, [:user_id, :organization_id], unique: true
-    add_index :organizations_users, [:organization_id, :user_id], unique: true
+    add_index :organizations_users, %i[user_id organization_id], unique: true
+    add_index :organizations_users, %i[organization_id user_id], unique: true
   end
 end

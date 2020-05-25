@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module API
   class Root < Grape::API
-    #http://localhost:3000/api
+    # http://localhost:3000/api
     format :json
 
     mount API::V1::Root

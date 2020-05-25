@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateReferenceCalendars < ActiveRecord::Migration[6.0]
   def change
     # 自分以外のユーザーで予定を閲覧中のカレンダーの情報を保存するテーブル

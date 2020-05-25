@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Schedule < ApplicationRecord
   has_and_belongs_to_many :calendars
   has_many :invitees, dependent: :destroy

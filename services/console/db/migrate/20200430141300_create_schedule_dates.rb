@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateScheduleDates < ActiveRecord::Migration[6.0]
   def change
     create_table :schedule_dates do |t|

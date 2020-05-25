@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCalendar < ActiveRecord::Migration[6.0]
   def change
     create_table :calendars do |t|
@@ -9,6 +11,6 @@ class CreateCalendar < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :calendars, [:user_id, :title], unique: true
+    add_index :calendars, %i[user_id title], unique: true
   end
 end
