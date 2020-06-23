@@ -21,7 +21,7 @@ profiles:
                 dest: "/app"
           docker:
             dockerfile: ./Dockerfile
-            target: base
+            target: dev
 #        - image: basecamp/backend
 #          context: services/backend
 #          sync:
@@ -45,7 +45,7 @@ profiles:
                 dest: "/app"
           docker:
             dockerfile: ./Dockerfile
-            target: base
+            target: dev
         - image: basecamp/mock-server
           context: services/console/openapi
           docker:
