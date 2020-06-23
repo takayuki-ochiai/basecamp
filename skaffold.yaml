@@ -21,7 +21,7 @@ profiles:
                 dest: "/app"
           docker:
             dockerfile: ./Dockerfile
-            target: dev
+            target: base
 #        - image: basecamp/backend
 #          context: services/backend
 #          sync:
@@ -45,7 +45,7 @@ profiles:
                 dest: "/app"
           docker:
             dockerfile: ./Dockerfile
-            target: dev
+            target: base
         - image: basecamp/mock-server
           context: services/console/openapi
           docker:
@@ -54,15 +54,15 @@ profiles:
     deploy:
       kustomize:
         path: infrastructure/k8s/overlays/development
-      helm:
-        releases:
-          - name: argo-minio
-            chartPath: charts/argo-minio
-            skipBuildDependencies: true
-            valuesFiles:
-              - charts/values/argo-minio.yaml
-          - name: argo
-            chartPath: charts/argo
-            skipBuildDependencies: true
-            valuesFiles:
-              - charts/values/argo.yaml
+#      helm:
+#        releases:
+#          - name: argo-minio
+#            chartPath: charts/argo-minio
+#            skipBuildDependencies: true
+#            valuesFiles:
+#              - charts/values/argo-minio.yaml
+#          - name: argo
+#            chartPath: charts/argo
+#            skipBuildDependencies: true
+#            valuesFiles:
+#              - charts/values/argo.yaml
