@@ -87,7 +87,7 @@ GEM
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
     declarative-option (0.1.0)
-    diff-lcs (1.4)
+    diff-lcs (1.4.2)
     disposable (0.4.7)
       declarative (>= 0.0.9, < 1.0.0)
       declarative-builder (< 0.2.0)
@@ -352,13 +352,11 @@ DEPENDENCIES
   grape-entity
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
-  multi_json
   mysql2 (~> 0.5.2)
   puma (~> 3.12)
   rack-cors
   rails (~> 6.0.0)
   reform
-  representable
   rspec-rails (~> 4.0.0)
   sass-rails (~> 5)
   selenium-webdriver

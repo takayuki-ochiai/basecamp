@@ -42,9 +42,7 @@ gem 'rack-cors'
 gem 'dry-monads'
 gem 'dry-types'
 gem 'dry-validation'
-gem 'multi_json'
 gem 'reform'
-gem 'representable'
 gem 'trailblazer'
 gem 'trailblazer-rails' # if you are in rails.
 
