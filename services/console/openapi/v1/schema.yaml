@@ -28,7 +28,7 @@ paths:
                   description: "Firebase Authentication ユーザーのID"
                   type: string
       responses:
-        '200':
+        '201':
           description: Successfully returned a list of training plans
           content:
             application/json:
