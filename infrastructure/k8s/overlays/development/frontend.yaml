@@ -6,9 +6,15 @@ spec:
   selector:
     app: frontend
   ports:
-  - protocol: TCP
+  - name: nextjs
+    protocol: TCP
     port: 3000
     targetPort: 3000
+  - name: storybook
+    protocol: TCP
+    port: 6006
+    targetPort: 6006
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,6 +36,7 @@ spec:
         image: basecamp/frontend
         ports:
         - containerPort: 3000
+        - containerPort: 6006
         envFrom:
         - configMapRef:
             name: frontend-config
