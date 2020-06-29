@@ -60,6 +60,7 @@
     "nodemon": "^2.0.3",
     "prettier": "^2.0.5",
     "react-docgen-typescript-loader": "^3.7.2",
+    "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "react-test-renderer": "^16.13.1",
     "require-context.macro": "^1.2.2",
     "ts-jest": "^26.1.1",
