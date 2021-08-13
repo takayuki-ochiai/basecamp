@@ -27,7 +27,7 @@
     "firebase": "^6.6.1",
     "firebase-admin": "^5.8.2",
     "http-status-codes": "^1.4.0",
-    "next": "^9.3.6",
+    "next": "^11.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.0.0"
